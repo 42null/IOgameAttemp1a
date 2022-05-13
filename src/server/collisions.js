@@ -23,7 +23,7 @@ function applyBulletCollisions(players, astroids, bullets) {//TODO: Good off of 
     for (let j = 0; j < astroids.length; j++) {
       const bullet = bullets[i];
       const astroid = astroids[j];
-      if(astroid.distanceTo(bullet) <= Constants.PLAYER_RADIUS + Constants.BULLET_RADIUS){
+      if(astroid.distanceTo(bullet) <= Math.trunc(Math.log(astroid.hp+3)*12) + Constants.BULLET_RADIUS){
         destroyedBullets.push(bullet);
         if(astroid.takeBulletDamage()){
             destroyedAstroids.push(astroid);

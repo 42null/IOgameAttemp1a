@@ -5,8 +5,8 @@ const Constants = require('../shared/constants');
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
-    // this.username = username;
-    this.username = username+" ("+id+")";//@CHNAGED
+    this.username = username;
+    // this.username = username+" ("+id+")";//@CHNAGED
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
     this.score = 0;
@@ -25,7 +25,7 @@ class Player extends ObjectClass {
 
     // Fire a bullet, if needed
     this.fireCooldown -= dt;
-    if (this.fireCooldown <= 0) {
+    if (this.fireCooldown <= 0 ) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
       return new Bullet(this.id, this.x, this.y, this.direction);
     }

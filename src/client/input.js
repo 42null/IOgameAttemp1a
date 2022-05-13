@@ -1,6 +1,7 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#6-client-input-%EF%B8%8F
 import { updateDirection } from './networking';
+const Constants = require('../shared/constants');
 
 function onMouseInput(e) {
   handleInput(e.clientX, e.clientY);
@@ -16,9 +17,17 @@ function handleInput(x, y) {
   updateDirection(dir);
 }
 
+function onClick(x, y) {
+  const mouseClicked = true;
+  updateDirection(dir);
+  updateClick(true);
+}
+
 export function startCapturingInput() {
-  window.addEventListener('mousemove', onMouseInput);
-  window.addEventListener('click', onMouseInput);
+  if(!Constants.CLICK_ONLY_DIRECTIONS){
+    window.addEventListener('mousemove', onMouseInput);
+  }
+  window.addEventListener('click', onClick);
   window.addEventListener('touchstart', onTouchInput);
   window.addEventListener('touchmove', onTouchInput);
 }
