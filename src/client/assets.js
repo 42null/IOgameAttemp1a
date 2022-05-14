@@ -2,12 +2,17 @@ const ASSET_NAMES = [
   'ship.svg',
   'bullet.svg',
   'astroid.svg',
-  'greyastroid.svg',
+  'greyAstroid.svg',
+  // 'tealGreenAstroid.svg',
+    // 'Astroids/astroid.svg',
+  // 'Astroids/greyAstroid.svg',
+  // 'Astroids/tealGreenAstroid.svg',
 ];
 
 const assets = {};
 
 const downloadPromise = Promise.all(ASSET_NAMES.map(downloadAsset));
+    // assetName = "Astroids/tealGreenAstroid.svg";
 
 function downloadAsset(assetName) {
   return new Promise(resolve => {

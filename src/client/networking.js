@@ -41,6 +41,6 @@ export const updateDirection = throttle(20, dir => {
 
 export const updateClick = throttle(20, isClicked => {
 
-    socket.emit(Constants.MSG_TYPES.CLICKED, isClicked);
-    console.log("Clicked!");
+    // socket.emit(Constants.MSG_TYPES.CLICKED, isClicked);
+    // console.log("Clicked!");
 });
