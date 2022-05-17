@@ -44,7 +44,7 @@ function render() {
     others.forEach(renderPlayer.bind(null, me));
 
     // Draw all astroids
-    astroids.forEach(renderAstroid.bind(null, me));//HERE@@@
+    astroids.forEach(renderAstroid.bind(null, me));
   }
 
   // Rerun this render function on the next frame
@@ -124,7 +124,7 @@ function renderAstroid(me, astroid) {
   //   PLAYER_RADIUS * 2,
   //   PLAYER_RADIUS * 2,
   // );
-  const { x, y, direction } = astroid;
+  const { x, y, direction, type } = astroid;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -135,9 +135,18 @@ function renderAstroid(me, astroid) {
 
   const displaySize = Math.trunc(Math.log(astroid.hp+3)*12);
 
+    var astroidAsset = null;
+    if(type == 1){
+        astroidAsset = getAsset('astroid.svg');
+    }else if(type == 3){
+      astroidAsset = getAsset('tealGreenAstroid.svg');
+    }else{
+        astroidAsset = getAsset('astroid.svg');
+    }
+    
   context.drawImage(
     // getAsset('greyastroid.svg'),
-    getAsset('astroid.svg'),
+    astroidAsset,
     -displaySize,//TODO: Get to work with .size
     -displaySize,
     displaySize * 2,

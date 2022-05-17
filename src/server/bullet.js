@@ -6,6 +6,7 @@ class Bullet extends ObjectClass {
   constructor(parentID, x, y, dir) {
     super(shortid(), x, y, dir, Constants.BULLET_SPEED);
     this.parentID = parentID;
+    this.hit = 0;
   }
 
   // Returns true if the bullet should be destroyed

@@ -10,6 +10,7 @@ class Player extends ObjectClass {
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
     this.score = 0;
+    this.rocks = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -37,8 +38,15 @@ class Player extends ObjectClass {
     this.hp -= Constants.BULLET_DAMAGE;
   }
 
-  onDealtDamage() {
-    this.score += Constants.SCORE_BULLET_HIT;
+  onDealtDamage(bullet) {
+    const firstCharacter = bullet.hit.substr(0, 1);
+    if(firstCharacter == "A"){//Astroid
+        this.score += Constants.SCORE_ASTROID_HIT;
+        this.rocks += 5;
+    }else if(firstCharacter == "P"){//Player
+        this.score += Constants.SCORE_BULLET_HIT;
+    }
+
   }
 
   serializeForUpdate() {
@@ -46,6 +54,7 @@ class Player extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
+      rocks: this.rocks,
     };
   }
 }

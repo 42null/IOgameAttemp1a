@@ -4,10 +4,12 @@ const Constants = require('../shared/constants');
 class Astroid extends ObjectClass {
     hp = -1;
     size = -1;
+    type = 0; //Default
     
-  constructor(id, size, x, y) {
+  constructor(id, size, x, y, type) {
     super(id, x, y, Math.random() * 2 * Math.PI, 0);
     this.hp = size;
+    this.type = type;
   }
   // constructor(parentID, x, y, dir) {
   //   super(shortid(), x, y, dir, Constants.BULLET_SPEED);
@@ -43,6 +45,7 @@ class Astroid extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
+      type: this.type,
     };
   }
 }
