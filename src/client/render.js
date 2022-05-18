@@ -138,8 +138,10 @@ function renderAstroid(me, astroid) {
     var astroidAsset = null;
     if(type == 1){
         astroidAsset = getAsset('astroid.svg');
+    }else if(type == 2){
+        astroidAsset = getAsset('greyastroid.svg');
     }else if(type == 3){
-      astroidAsset = getAsset('tealGreenAstroid.svg');
+        astroidAsset = getAsset('tealGreenAstroid.svg');
     }else{
         astroidAsset = getAsset('astroid.svg');
     }

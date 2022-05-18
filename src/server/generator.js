@@ -1,6 +1,7 @@
 const Constants = require('../shared/constants');
 const { MAP_SIZE } = Constants;
 
+var numberGenerated = 0;
 
 module.exports.generateAttackables = function(attackable, numberToGenerate, minSize, maxSize, type){//TODO: Make seedable
     newAttackables = [];
@@ -10,7 +11,7 @@ module.exports.generateAttackables = function(attackable, numberToGenerate, minS
             useType = Math.round(Math.random() * (3 - 1) + 1);
         }
         newAttackables.push(new attackable(
-            Math.floor(Math.random()*1000),
+            numberGenerated++,
             Math.random() * (maxSize - minSize) + minSize,
             Math.floor(Math.random()*MAP_SIZE),
             Math.floor(Math.random()*MAP_SIZE),

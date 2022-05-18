@@ -14,6 +14,7 @@ export function updateLeaderboard(data) {
   for (let i = data.length; i < 5; i++) {
     rows[i + 1].innerHTML = '<td>-</td><td>-</td>';
   }
+    rows[0].innerHTML = "<p>This is a test</p>";
 }
 
 export function setLeaderboardHidden(hidden) {

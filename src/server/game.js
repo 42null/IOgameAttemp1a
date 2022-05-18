@@ -29,7 +29,7 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
 
 
-    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, 10,10,100,1));
+    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/50),10,100,1));
   }
 
   addPlayer(socket, username) {

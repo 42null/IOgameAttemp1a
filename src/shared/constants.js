@@ -8,11 +8,11 @@ module.exports = Object.freeze({
   BULLET_SPEED: 800,
   BULLET_DAMAGE: 10,
 
-  SCORE_BULLET_HIT: 20,
+  SCORE_BULLET_HIT: 200,
   SCORE_ASTROID_HIT: 5,
   SCORE_PER_SECOND: 0,
 
-  MAP_SIZE: 2000,
+  MAP_SIZE: 5000,
   MSG_TYPES: {
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',
