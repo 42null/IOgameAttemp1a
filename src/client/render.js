@@ -54,6 +54,14 @@ function render() {
 function renderBackground(x, y) {
   const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
   const backgroundY = MAP_SIZE / 2 - y + canvas.height / 2;
+  // const backgroundGradient = context.createRadialGradient(
+  //   backgroundX,
+  //   backgroundY,
+  //   MAP_SIZE / 10,
+  //   backgroundX,
+  //   backgroundY,
+  //   MAP_SIZE / 2,
+  // );
   const backgroundGradient = context.createRadialGradient(
     backgroundX,
     backgroundY,
@@ -62,7 +70,7 @@ function renderBackground(x, y) {
     backgroundY,
     MAP_SIZE / 2,
   );
-  backgroundGradient.addColorStop(0, 'black');
+  backgroundGradient.addColorStop(0, '#55cf9c');
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -78,12 +86,13 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(direction);
+  const use_player_radius = Math.round(PLAYER_RADIUS*(player.hp/PLAYER_MAX_HP))+5;
   context.drawImage(
     getAsset('ship.svg'),
-    -PLAYER_RADIUS,
-    -PLAYER_RADIUS,
-    PLAYER_RADIUS * 2,
-    PLAYER_RADIUS * 2,
+    -use_player_radius,
+    -use_player_radius,
+    use_player_radius * 2,
+    use_player_radius * 2,
   );
   context.restore();
 

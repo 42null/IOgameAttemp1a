@@ -27,6 +27,7 @@ Promise.all([
     // Play!
     play(usernameInput.value);
     playMenu.classList.add('hidden');
+    playMenu.classList.add('player_info');
     initState();
     startCapturingInput();
     startRendering();

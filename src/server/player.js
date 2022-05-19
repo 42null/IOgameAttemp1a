@@ -14,6 +14,7 @@ class Player extends ObjectClass {
     // this.username = username+" ("+id+")";//@CHNAGED
     this.fireCooldown = 0;
     this.score = 0;
+    this.updatedRocks = false;
     this.rocks = 0;
   }
 
@@ -32,7 +33,7 @@ class Player extends ObjectClass {
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0 ) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-      return new Bullet(this.id, this.x, this.y, this.direction, 70);
+      return new Bullet(this.id, this.x, this.y, this.direction, Constants.BULLET_TIME_TICKS);
     }
 
     return null;
@@ -47,6 +48,7 @@ class Player extends ObjectClass {
     if(firstCharacter == "A"){//Astroid
         this.score += Constants.SCORE_ASTROID_HIT;
         this.rocks += 5;
+        this.updatedRocks = false;
     }else if(firstCharacter == "P"){//Player
         this.score += Constants.SCORE_BULLET_HIT;
     }

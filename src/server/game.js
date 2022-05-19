@@ -109,6 +109,12 @@ class Game {
         socket.emit(Constants.MSG_TYPES.GAME_OVER);
         this.removePlayer(socket);
       }
+        
+      if (!player.updatedRocks) {
+        socket.emit(Constants.MSG_TYPES.UPDATE_ROCKS, player.rocks);
+        player.updatedRocks = true;
+        // this.removePlayer(socket);
+      }
     });
 
     // Send a game update to each player every other time

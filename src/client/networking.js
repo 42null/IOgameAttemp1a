@@ -20,6 +20,12 @@ export const connect = onGameOver => (
   connectedPromise.then(() => {
     // Register callbacks
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
+    socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (rocks) => {
+        const numberOfRocks = JSON.parse(rocks);
+       document.getElementById('rocks').innerHTML = 'Rocks: '+numberOfRocks;
+       document.getElementById('metal').innerHTML = 'Metal: '+numberOfRocks;
+       document.getElementById('nickel').innerHTML = 'Metal: '+numberOfRocks;
+    });
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {
       console.log('Disconnected from server.');
@@ -33,6 +39,7 @@ export const connect = onGameOver => (
 
 export const play = username => {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
+  document.getElementById('test').classList.remove('hidden');//SO IT ONLY RUNS ONCE
 };
 
 export const updateDirection = throttle(20, dir => {

@@ -2,12 +2,13 @@ module.exports = Object.freeze({
   PLAYER_RADIUS: 20,
   PLAYER_MAX_HP: 100,
   PLAYER_SPEED: 100,
-  PLAYER_FIRE_COOLDOWN: 0.125,
+  PLAYER_FIRE_COOLDOWN: 0.1,
 
   BULLET_RADIUS: 3,
   BULLET_SPEED: 800,
   BULLET_DAMAGE: 10,
-
+  BULLET_TIME_TICKS: 70,
+    
   SCORE_BULLET_HIT: 200,
   SCORE_ASTROID_HIT: 5,
   SCORE_PER_SECOND: 0,
@@ -19,6 +20,7 @@ module.exports = Object.freeze({
     INPUT: 'input',
     CLICKED: 'clicked',
     GAME_OVER: 'dead',
+    UPDATE_ROCKS: 'update_rocks',
   },
 
     CLICK_ONLY_DIRECTIONS: false,
