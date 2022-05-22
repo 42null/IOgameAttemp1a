@@ -29,7 +29,7 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
 
 
-    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/50),10,100,1));
+    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
   }
 
   addPlayer(socket, username) {
@@ -111,7 +111,7 @@ class Game {
       }
         
       if (!player.updatedRocks) {
-        socket.emit(Constants.MSG_TYPES.UPDATE_ROCKS, player.rocks);
+        socket.emit(Constants.MSG_TYPES.UPDATE_ROCKS,{ rocks: player.rocks, metal: player.metal, nickel: player.nickel });
         player.updatedRocks = true;
         // this.removePlayer(socket);
       }

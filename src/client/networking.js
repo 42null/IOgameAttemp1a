@@ -20,11 +20,15 @@ export const connect = onGameOver => (
   connectedPromise.then(() => {
     // Register callbacks
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
-    socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (rocks) => {
-        const numberOfRocks = JSON.parse(rocks);
-       document.getElementById('rocks').innerHTML = 'Rocks: '+numberOfRocks;
-       document.getElementById('metal').innerHTML = 'Metal: '+numberOfRocks;
-       document.getElementById('nickel').innerHTML = 'Metal: '+numberOfRocks;
+    socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (combineMaterials) => {
+        // console.log("numberOfRocks = "+JSON.parse(combineMaterials.rocks));
+        // console.log("numberOfmetal = "+JSON.parse(combineMaterials.metal));
+        const numberOfRocks = JSON.parse(combineMaterials.rocks);
+        const numberOfMetal = JSON.parse(combineMaterials.metal);
+        const numberOfNickel = JSON.parse(combineMaterials.nickel);
+        document.getElementById('rocks').innerHTML = 'Rocks: '+numberOfRocks;
+        document.getElementById('metal').innerHTML = 'Metal: '+numberOfMetal;
+        document.getElementById('nickel').innerHTML = 'Nickel: '+numberOfNickel;
     });
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {

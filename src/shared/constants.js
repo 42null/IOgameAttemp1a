@@ -10,7 +10,7 @@ module.exports = Object.freeze({
   BULLET_TIME_TICKS: 70,
     
   SCORE_BULLET_HIT: 200,
-  SCORE_ASTROID_HIT: 5,
+  SCORE_ASTROID_HIT: 1,
   SCORE_PER_SECOND: 0,
 
   MAP_SIZE: 5000,

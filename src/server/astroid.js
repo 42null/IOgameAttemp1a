@@ -7,9 +7,12 @@ class Astroid extends ObjectClass {
     type = 0; //Default
     
   constructor(id, size, x, y, type) {
-    super(id, x, y, Math.random() * 2 * Math.PI, 0);
+    // super("A"+type+id, x, y, Math.random() * 2 * Math.PI, 0);
+    super("A"+id, x, y, Math.random() * 2 * Math.PI, 0);
+    // this.type = type;
+    this.type = id.charAt(0);
     this.hp = size;
-    this.type = type;
+      // console.log(this.type);
   }
   // constructor(parentID, x, y, dir) {
   //   super(shortid(), x, y, dir, Constants.BULLET_SPEED);

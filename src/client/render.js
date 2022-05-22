@@ -145,16 +145,16 @@ function renderAstroid(me, astroid) {
   const displaySize = Math.trunc(Math.log(astroid.hp+3)*12);
 
     var astroidAsset = null;
-    if(type == 1){
+    const typeChar = type.charAt(0);
+    if(typeChar == 'R'){
         astroidAsset = getAsset('astroid.svg');
-    }else if(type == 2){
+    }else if(typeChar == 'M'){
         astroidAsset = getAsset('greyastroid.svg');
-    }else if(type == 3){
+    }else if(typeChar == 'N'){
         astroidAsset = getAsset('tealGreenAstroid.svg');
     }else{
         astroidAsset = getAsset('astroid.svg');
     }
-    
   context.drawImage(
     // getAsset('greyastroid.svg'),
     astroidAsset,

@@ -14,8 +14,11 @@ class Player extends ObjectClass {
     // this.username = username+" ("+id+")";//@CHNAGED
     this.fireCooldown = 0;
     this.score = 0;
+      
     this.updatedRocks = false;
     this.rocks = 0;
+    this.metal = 0;
+    this.nickel = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -47,8 +50,17 @@ class Player extends ObjectClass {
     const firstCharacter = bullet.hit.substr(0, 1);
     if(firstCharacter == "A"){//Astroid
         this.score += Constants.SCORE_ASTROID_HIT;
-        this.rocks += 5;
-        this.updatedRocks = false;
+        const secondCharacter = bullet.hit.substr(1, 2);
+        if(secondCharacter == "R"){//ROCK
+            this.updatedRocks = false;
+            this.rocks += 5;
+        }else if(secondCharacter == "M"){//METAL
+            this.updatedRocks = false;
+            this.metal += 5;
+        }else if(secondCharacter == "N"){//NICKEL
+            this.updatedRocks = false;
+            this.nickel += 5;
+        }
     }else if(firstCharacter == "P"){//Player
         this.score += Constants.SCORE_BULLET_HIT;
     }

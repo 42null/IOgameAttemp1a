@@ -14,6 +14,7 @@ function applyBulletCollisions(players, astroids, bullets) {//TODO: Good off of 
       const astroid = astroids[j];
       if(astroid.distanceTo(bullet) <= Math.trunc(Math.log(astroid.hp+3)*12) + Constants.BULLET_RADIUS){
         bullet.hit = "A"+astroid.type;
+          // console.log(bullet.hit+"~~~")
         destroyedBullets.push(bullet);
         if(astroid.takeBulletDamage()){
             destroyedAstroids.push(astroid);
