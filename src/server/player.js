@@ -46,6 +46,22 @@ class Player extends ObjectClass {
     this.hp -= Constants.BULLET_DAMAGE;
   }
 
+    purchaseUpgrade(upgradeSlot){
+        this.hp -= (Constants.BULLET_DAMAGE);
+        // console.log("Something-=-=-1=-=-=-=");
+        // if(upgradeSlot==1){//TODO: Make as switch
+        //     if(this.nickel >= Constants.UPGRADE_COLOR_COST){
+        //         // this.nickel -= Cons;
+        //     }
+        // }else if(upgradeSlot==2){
+        //     console.log("Something-=-=-=-=-=-=");
+        //     if(this.nickel >= Constants.UPGRADE_HP_COST){
+        //         this.nickel -= Constants.UPGRADES_HP_CONST;
+        //         this.hp += 50;
+        //     }
+        // }
+    }
+    
   onDealtDamage(bullet) {
     const firstCharacter = bullet.hit.substr(0, 1);
     if(firstCharacter == "A"){//Astroid

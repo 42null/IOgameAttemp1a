@@ -9,6 +9,13 @@ const Constants = require('../shared/constants');
 const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'ws';
 const socket = io(`${socketProtocol}://${window.location.host}`, { reconnection: false });
 
+export var resources = {
+    numberOfRocks: 0,
+    numberOfMetal: 0,
+    numberOfNickel: 0
+};
+
+
 const connectedPromise = new Promise(resolve => {
   socket.on('connect', () => {
     console.log('Connected to server!');
@@ -23,12 +30,12 @@ export const connect = onGameOver => (
     socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (combineMaterials) => {
         // console.log("numberOfRocks = "+JSON.parse(combineMaterials.rocks));
         // console.log("numberOfmetal = "+JSON.parse(combineMaterials.metal));
-        const numberOfRocks = JSON.parse(combineMaterials.rocks);
-        const numberOfMetal = JSON.parse(combineMaterials.metal);
-        const numberOfNickel = JSON.parse(combineMaterials.nickel);
-        document.getElementById('rocks').innerHTML = 'Rocks: '+numberOfRocks;
-        document.getElementById('metal').innerHTML = 'Metal: '+numberOfMetal;
-        document.getElementById('nickel').innerHTML = 'Nickel: '+numberOfNickel;
+        resources.numberOfRocks = JSON.parse(combineMaterials.rocks);
+        resources.numberOfMetal = JSON.parse(combineMaterials.metal);
+        resources.numberOfNickel = JSON.parse(combineMaterials.nickel);
+        document.getElementById('rocks').innerHTML = 'Rocks: '+resources.numberOfRocks;
+        document.getElementById('metal').innerHTML = 'Metal: '+resources.numberOfMetal;
+        document.getElementById('nickel').innerHTML = 'Nickel: '+resources.numberOfNickel;
     });
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {
@@ -44,6 +51,7 @@ export const connect = onGameOver => (
 export const play = username => {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
   document.getElementById('test').classList.remove('hidden');//SO IT ONLY RUNS ONCE
+  document.getElementById('bottomUpgradeBar').classList.remove('hidden');//SO IT ONLY RUNS ONCE
 };
 
 export const updateDirection = throttle(20, dir => {
@@ -51,7 +59,20 @@ export const updateDirection = throttle(20, dir => {
 });
 
 export const updateClick = throttle(20, isClicked => {
-
     // socket.emit(Constants.MSG_TYPES.CLICKED, isClicked);
     // console.log("Clicked!");
+});
+
+// // export const purchaseUpgrade = throttle(20, number => {
+// export const purchaseUpgrade = number => {
+//     console.log("INSIDE Esport const ");
+//     if(1 <= number && number <= 9){
+//       socket.emit(Constants.UPGRADE_ATTEMPT, number);
+//     }
+// // });
+// };
+
+export const purchaseUpgrade = throttle(2, dir => {
+    console.log("WITHIN THROTTLE");
+  socket.emit("Constants.UPGRADE_ATTEMPT", dir);
 });

@@ -31,7 +31,7 @@ const io = socketio(server);
 // Listen for socket.io connections
 io.on('connection', socket => {
   console.log('Player connected!', socket.id);
-
+  socket.on("Constants.UPGRADE_ATTEMPT", upgradeShip);
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on('disconnect', onDisconnect);
@@ -48,6 +48,11 @@ function handleInput(dir) {
   game.handleInput(this, dir);
 }
 
+function upgradeShip(slot) {
+    console.log("withing upgradeShip(slot)");
+    game.upgradeShip(this, slot);
+}
+    
 function onDisconnect() {
   game.removePlayer(this);
 }

@@ -29,7 +29,8 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
 
 
-    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
+    // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
+    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,-2));
   }
 
   addPlayer(socket, username) {
@@ -49,6 +50,24 @@ class Game {
   handleInput(socket, dir) {
     if (this.players[socket.id]) {
       this.players[socket.id].setDirection(dir);
+    }
+  }
+
+  upgradeShip(socket, upgradeSlot) {
+    //   // console.log("upgradeShip2");
+    // if (this.players[socket.id]) {
+    //   // this.players[socket.id].setDirection(0);
+
+    //   // this.players[socket.id].purchaseUpgrade(upgradeSlot);
+    //   this.players[socket.id].purchaseUpgrade(2);
+    // }
+    // const x=0;
+    // const y=0;
+    // const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
+    // handleInput(socket, 0);
+    if (this.players[socket.id]) {
+        this.players[socket.id].takeBulletDamage();
+        // this.players[socket.id].setDirection(dir);
     }
   }
     
