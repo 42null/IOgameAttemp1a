@@ -1,6 +1,7 @@
 const ObjectClass = require('./object');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
+const upgradeChecks = require('../shared/upgradeChecks');
 
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
@@ -16,9 +17,17 @@ class Player extends ObjectClass {
     this.score = 0;
       
     this.updatedRocks = false;
-    this.rocks = 0;
-    this.metal = 0;
-    this.nickel = 0;
+    this.resources = {
+        rocks: 0,
+        metal: 0,
+        nickel: 0
+    };
+    this.resources.rocks = 0;
+    this.resources.metal = 0;
+    this.resources.nickel = 0;
+
+    this.boostSpeedTotalEnegeryAdd = 0;
+    this.boostTime = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -28,6 +37,12 @@ class Player extends ObjectClass {
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;
 
+    //UPDATE SPEED & ENGINE DISPLAY
+    if(this.boostTime > 0){
+        this.boostTime-=1;
+        this.speed
+    }
+      
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
@@ -45,21 +60,39 @@ class Player extends ObjectClass {
   takeBulletDamage() {
     this.hp -= Constants.BULLET_DAMAGE;
   }
+    boost(ticks){
+        this.boostSpeed += ticks;
+    }
 
     purchaseUpgrade(upgradeSlot){
-        this.hp -= (Constants.BULLET_DAMAGE);
-        // console.log("Something-=-=-1=-=-=-=");
-        // if(upgradeSlot==1){//TODO: Make as switch
-        //     if(this.nickel >= Constants.UPGRADE_COLOR_COST){
-        //         // this.nickel -= Cons;
-        //     }
-        // }else if(upgradeSlot==2){
-        //     console.log("Something-=-=-=-=-=-=");
-        //     if(this.nickel >= Constants.UPGRADE_HP_COST){
-        //         this.nickel -= Constants.UPGRADES_HP_CONST;
-        //         this.hp += 50;
-        //     }
-        // }
+        console.log("upgradeSlot = "+ upgradeSlot);
+        console.log("Inside of purchaseUpgrable about to do upgradeChecks on server side");
+        if (!upgradeChecks.checkFromPosistion(upgradeSlot,this.resources)) return;
+        
+        if(upgradeSlot==49){//TODO: Make as switch
+            this.hp -= 40;
+            this.boost(500);
+            
+        }else if(upgradeSlot==50){
+            this.resources.metal = this.resources.metal - 50;//Constants.UPGRADES_HP_CONST;
+            this.hp += 50;
+            // console.log("this.resources.metal = "+this.resources.metal);
+            this.hp = Math.min(this.hp, Constants.MAX_UPGRADEABLE_HP)
+            this.updatedRock = false;
+            
+        }else if(upgradeSlot==51){
+            if(this.resources.metal >= Constants.UPGRADE_HP_COST){
+                this.resources.metal = this.resources.metal - 50;//Constants.UPGRADES_HP_CONST;
+                this.speed += 25;
+                // console.log("this.resources.metal = "+this.resources.metal);
+                this.hp = Math.min(this.hp, Constants.MAX_UPGRADEABLE_HP)
+                this.updatedRock = false;
+            }
+            
+        }else if(upgradeSlot==72){
+            this.resources.metal += 50
+            
+        }
     }
     
   onDealtDamage(bullet) {
@@ -69,13 +102,13 @@ class Player extends ObjectClass {
         const secondCharacter = bullet.hit.substr(1, 2);
         if(secondCharacter == "R"){//ROCK
             this.updatedRocks = false;
-            this.rocks += 5;
+            this.resources.rocks += 5;
         }else if(secondCharacter == "M"){//METAL
             this.updatedRocks = false;
-            this.metal += 5;
+            this.resources.metal += 5;
         }else if(secondCharacter == "N"){//NICKEL
             this.updatedRocks = false;
-            this.nickel += 5;
+            this.resources.nickel += 5;
         }
     }else if(firstCharacter == "P"){//Player
         this.score += Constants.SCORE_BULLET_HIT;
@@ -88,7 +121,7 @@ class Player extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
-      rocks: this.rocks,
+      rocks: this.resources.rocks,
     };
   }
 }

@@ -1,9 +1,12 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#6-client-input-%EF%B8%8F
-import { updateDirection } from './networking';
-import { purchaseUpgrade } from './networking';
+import { updateDirection, purchaseUpgrade } from './networking';
 import { resources } from './networking';
 const Constants = require('../shared/constants');
+// import checkFromPosistion from '../shared/upgradeChecks';
+const UpgradeChecks = require('../shared/upgradeChecks');
+
+
 
 function onMouseInput(e) {
   handleInput(e.clientX, e.clientY);
@@ -20,36 +23,18 @@ function handleInput(x, y) {
 }
 
 function onClick(x, y) {
-  const mouseClicked = true;
-  updateDirection(dir);
-  updateClick(true);
+  // const mouseClicked = true;
+  // const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
+  // updateDirection(dir);
+  // updateClick(true);
 }
+
 
 function onKeyDown(event){
     const pressedKeyNum = event.keyCode;
-    console.log("PRESSED = "+event.keyCode);
-    if(pressedKeyNum==49){
-        if(resources.numberOfNickel >= Constants.UPGRADE_COLOR_COST){
-            purchaseUpgrade(1);
-        }
-    }else if(pressedKeyNum==50){
-        if(resources.numberOfNickel >= Constants.UPGRADE_HP_COST){
-            console.log("PRESSED ATTEMPTING HP COST");
-            purchaseUpgrade(2);
-            const x=0;
-            const y=0;
-              const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
-
-            updateDirection(dir);
-            purchaseUpgrade(2);
-        }
-    }else if(pressedKeyNum==51){
-    }else if(pressedKeyNum==52){
-    }else if(pressedKeyNum==53){
-    }else if(pressedKeyNum==54){
-    }else if(pressedKeyNum==55){
-    }else if(pressedKeyNum==56){
-    }else if(pressedKeyNum==57){
+    console.log(pressedKeyNum);
+    if(UpgradeChecks.checkFromPosistion(pressedKeyNum, resources)){
+        purchaseUpgrade(pressedKeyNum, resources);
     }
 }
 

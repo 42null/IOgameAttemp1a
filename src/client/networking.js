@@ -10,10 +10,13 @@ const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'w
 const socket = io(`${socketProtocol}://${window.location.host}`, { reconnection: false });
 
 export var resources = {
-    numberOfRocks: 0,
-    numberOfMetal: 0,
-    numberOfNickel: 0
+    rocks: 0,
+    metal: 0,
+    nickel: 0
 };
+// resources.rocks = 0;
+// resources.metal = 0;
+// resources.nickel = 0;
 
 
 const connectedPromise = new Promise(resolve => {
@@ -28,14 +31,16 @@ export const connect = onGameOver => (
     // Register callbacks
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (combineMaterials) => {
-        // console.log("numberOfRocks = "+JSON.parse(combineMaterials.rocks));
-        // console.log("numberOfmetal = "+JSON.parse(combineMaterials.metal));
-        resources.numberOfRocks = JSON.parse(combineMaterials.rocks);
-        resources.numberOfMetal = JSON.parse(combineMaterials.metal);
-        resources.numberOfNickel = JSON.parse(combineMaterials.nickel);
-        document.getElementById('rocks').innerHTML = 'Rocks: '+resources.numberOfRocks;
-        document.getElementById('metal').innerHTML = 'Metal: '+resources.numberOfMetal;
-        document.getElementById('nickel').innerHTML = 'Nickel: '+resources.numberOfNickel;
+        // console.log("rocks = "+JSON.parse(combineMaterials.rocks));
+        // console.log("metal = "+JSON.parse(combineMaterials.metal));
+                    console.log(JSON.parse(combineMaterials.rocks)+":::::::::::::::::::::::");
+
+        resources.rocks = JSON.parse(combineMaterials.rocks);
+        resources.metal = JSON.parse(combineMaterials.metal);
+        resources.nickel = JSON.parse(combineMaterials.nickel);
+        document.getElementById('rocks').innerHTML = 'Rocks: '+resources.rocks;
+        document.getElementById('metal').innerHTML = 'Metal: '+resources.metal;
+        document.getElementById('nickel').innerHTML = 'Nickel: '+resources.nickel;
     });
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {
@@ -63,16 +68,10 @@ export const updateClick = throttle(20, isClicked => {
     // console.log("Clicked!");
 });
 
-// // export const purchaseUpgrade = throttle(20, number => {
-// export const purchaseUpgrade = number => {
-//     console.log("INSIDE Esport const ");
-//     if(1 <= number && number <= 9){
-//       socket.emit(Constants.UPGRADE_ATTEMPT, number);
-//     }
-// // });
-// };
+// export const purchaseUpgrade = throttle(1, dir => {
+//   socket.emit(Constants.MSG_TYPES.UPGRADE_ATTEMPT, dir);
+// });
 
-export const purchaseUpgrade = throttle(2, dir => {
-    console.log("WITHIN THROTTLE");
-  socket.emit("Constants.UPGRADE_ATTEMPT", dir);
-});
+export const purchaseUpgrade = slot => {
+  socket.emit(Constants.MSG_TYPES.UPGRADE_ATTEMPT, slot);
+};

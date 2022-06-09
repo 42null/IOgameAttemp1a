@@ -97,20 +97,46 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
+    context.fillStyle = '#3ec452';
+    context.fillRect(
+        canvasX - PLAYER_RADIUS - 1,
+        canvasY + PLAYER_RADIUS + 7,
+        PLAYER_RADIUS * 2+2,
+        4,
+    );
+    
   context.fillStyle = 'white';
-  context.fillRect(
-    canvasX - PLAYER_RADIUS,
-    canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2,
-    2,
-  );
-  context.fillStyle = 'red';
+    context.fillRect(
+        canvasX - PLAYER_RADIUS,
+        canvasY + PLAYER_RADIUS + 8,
+        PLAYER_RADIUS * 2,
+        2,
+    );
+    context.fillStyle = '#3ec452';    
   context.fillRect(
     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
+    canvasY + PLAYER_RADIUS + 7,
+    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP)+1,
+    4,
+  );
+  if(player.hp < PLAYER_MAX_HP){
+    context.fillStyle = 'red';
+  }else{
+    context.fillStyle = 'orange';
+  }
+  context.fillRect(
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP - 1,
     canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP)+1,
     2,
   );
+  // context.fillStyle = 'green';
+  // context.fillRect(
+  //   canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
+  //   canvasY + PLAYER_RADIUS + 8,
+  //   PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+  //   2,
+  // );
 }
 
 function renderBullet(me, bullet) {

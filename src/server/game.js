@@ -30,7 +30,7 @@ class Game {
 
 
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
-    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,-2));
+    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));
   }
 
   addPlayer(socket, username) {
@@ -54,20 +54,9 @@ class Game {
   }
 
   upgradeShip(socket, upgradeSlot) {
-    //   // console.log("upgradeShip2");
-    // if (this.players[socket.id]) {
-    //   // this.players[socket.id].setDirection(0);
-
-    //   // this.players[socket.id].purchaseUpgrade(upgradeSlot);
-    //   this.players[socket.id].purchaseUpgrade(2);
-    // }
-    // const x=0;
-    // const y=0;
-    // const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
-    // handleInput(socket, 0);
+      console.log("Attempt at upgradeShip from within game");
     if (this.players[socket.id]) {
-        this.players[socket.id].takeBulletDamage();
-        // this.players[socket.id].setDirection(dir);
+        this.players[socket.id].purchaseUpgrade(upgradeSlot);
     }
   }
     
@@ -130,9 +119,8 @@ class Game {
       }
         
       if (!player.updatedRocks) {
-        socket.emit(Constants.MSG_TYPES.UPDATE_ROCKS,{ rocks: player.rocks, metal: player.metal, nickel: player.nickel });
+        socket.emit(Constants.MSG_TYPES.UPDATE_ROCKS,{ rocks: player.resources.rocks, metal: player.resources.metal, nickel: player.resources.nickel });
         player.updatedRocks = true;
-        // this.removePlayer(socket);
       }
     });
 

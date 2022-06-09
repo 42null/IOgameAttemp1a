@@ -1,0 +1,8 @@
+Player movement based on enegery
+  - Movement Vector
+    - Changed by 4 engines
+     ||
+    =[]=
+     ||
+        - Future plans adjustable motor direction.
+    - Requires enegery for each motor, generated pasivaly in per second 
