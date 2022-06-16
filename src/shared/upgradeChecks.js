@@ -6,13 +6,11 @@ const checkFromPosistion = (inputNumber, resoucesForClientSide) => {
 
     inputNumber = Math.trunc(inputNumber);
     
-    console.log("PRESSED= "+inputNumber);
-    console.log("this.metal = " + this.metal);
     // console.log("resoucesForClientSide.metal = " + resoucesForClientSide.metal);
     var isServer = false;
     try {
         // resoucesForClientSide.rocks;
-            console.log("resoucesForClientSide.metal (is client) = " + resoucesForClientSide.metal);
+            // console.log("resoucesForClientSide.metal (is client) = " + resoucesForClientSide.metal);
 
     }catch(err){
         console.log("Error was caught so is not client");
@@ -20,7 +18,7 @@ const checkFromPosistion = (inputNumber, resoucesForClientSide) => {
     }
     //for First 9
     if(inputNumber >= 48 && inputNumber < 57){
-        console.log("isServer = "+isServer);
+        // console.log("isServer = "+isServer);
         // console.log(this.instanceof Player);
         // if(isOnClientSide){
         //     purchaseUpgrade(inputNumber-48);
@@ -30,26 +28,23 @@ const checkFromPosistion = (inputNumber, resoucesForClientSide) => {
         if(inputNumber==49){/*1*/ return true;
                             
         }else if(inputNumber==50){/*2*/  
-            // if(!isClient && (this.metal >= Constants.UPGRADE_HP_COST && this.hp < Constants.MAX_UPGRADEABLE_HP)){
     
+            // if(isServer && (this.players[socket.id].metal >= Constants.UPGRADE_HP_COST) && (this.players[socket.id].hp < Constants.MAX_UPGRADEABLE_HP)){
             if(isServer && (this.players[socket.id].metal >= 50)){
-                console.log("SECOND1");
-                return true;
-            // }if(resoucesForClientSide.metal >= Constants.UPGRADE_HP_COST && resoucesForClientSide.hp < Constants.MAX_UPGRADEABLE_HP) {
-            }else{
-               console.log("SECOND1 NOT "+this.metal); 
-            }
-            if(!isServer && resoucesForClientSide.metal >= 50) {
-                console.log("SECOND2");
                 return true;
             }else{
-               console.log("SECOND2 NOT"); 
             }
-            console.log("SECOND3");
-
+            // if(!isServer && (resoucesForClientSide.metal >= Constants.UPGRADE_HP_COST) && (resoucesForClientSide.hp < Constants.MAX_UPGRADEABLE_HP)) {
+            if(!isServer && (resoucesForClientSide.metal >= Constants.UPGRADE_HP_COST)) {
+                return true;
+            }else{
+            }
+            return false;
         }else if(inputNumber==51){/*3*/  /*if(resources.numberOfMetal >= Constants.UPGRADE_HP_COST)  {return true;}*/
-        }else if(inputNumber==52){
-        }else if(inputNumber==53){
+        }else if(inputNumber==52){/*4*/
+            return true;
+        }else if(inputNumber==53){/*5*/
+            return true;
         }else if(inputNumber==54){
         }else if(inputNumber==55){
         }else if(inputNumber==56){

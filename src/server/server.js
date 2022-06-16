@@ -34,6 +34,7 @@ io.on('connection', socket => {
   socket.on(Constants.MSG_TYPES.UPGRADE_ATTEMPT, upgradeShip);
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
+  socket.on(Constants.MSG_TYPES.INPUT_MOVEMENT, handleInputMovementKeys);
   socket.on('disconnect', onDisconnect);
 });
 
@@ -46,6 +47,10 @@ function joinGame(username) {
 
 function handleInput(dir) {
   game.handleInput(this, dir);
+}
+
+function handleInputMovementKeys(cardinalDirection){
+    game.handleInputMovementKeys(this, cardinalDirection);
 }
 
 function upgradeShip(slot) {

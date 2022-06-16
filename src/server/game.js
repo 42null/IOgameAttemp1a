@@ -49,12 +49,28 @@ class Game {
 
   handleInput(socket, dir) {
     if (this.players[socket.id]) {
-      this.players[socket.id].setDirection(dir);
+      this.players[socket.id].setArmamentDirection(dir);
     }
   }
 
+    handleInputMovementKeys(socket, cardinalDirection) {
+        if (this.players[socket.id]) {
+            // switch(cardinalDirectiondir){
+            //     //Movements are for thrust
+            //     case(1)://North
+            //         newDirection
+            //         break;
+            //     default:
+            //         return;
+            // }
+            const newDirection = cardinalDirection;//(cardinalDirection-1)*90;
+            console.log("newDirection = "+newDirection);
+            this.players[socket.id].updateThrust(newDirection,10);
+        }
+    }
+
   upgradeShip(socket, upgradeSlot) {
-      console.log("Attempt at upgradeShip from within game");
+      // console.log("Attempt at upgradeShip from within game");
     if (this.players[socket.id]) {
         this.players[socket.id].purchaseUpgrade(upgradeSlot);
     }

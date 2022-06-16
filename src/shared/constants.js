@@ -1,7 +1,7 @@
 module.exports = Object.freeze({
     PLAYER_RADIUS: 15,
     PLAYER_MAX_HP: 500,
-    MAX_UPGRADEABLE_HP: 5000,
+    MAX_UPGRADEABLE_HP: 50000,
     PLAYER_SPEED: 70,
     PLAYER_FIRE_COOLDOWN: 0.1,
     
@@ -22,6 +22,7 @@ module.exports = Object.freeze({
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',
     INPUT: 'input',
+    INPUT_MOVEMENT: 'input_movement',
     CLICKED: 'clicked',
     GAME_OVER: 'dead',
     UPDATE_ROCKS: 'update_rocks',

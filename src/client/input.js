@@ -1,6 +1,6 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#6-client-input-%EF%B8%8F
-import { updateDirection, purchaseUpgrade } from './networking';
+import { updateDirection, purchaseUpgrade, moveShipCommand } from './networking';
 import { resources } from './networking';
 const Constants = require('../shared/constants');
 // import checkFromPosistion from '../shared/upgradeChecks';
@@ -32,8 +32,16 @@ function onClick(x, y) {
 
 function onKeyDown(event){
     const pressedKeyNum = event.keyCode;
-    console.log(pressedKeyNum);
-    if(UpgradeChecks.checkFromPosistion(pressedKeyNum, resources)){
+    console.log("PRESSED= "+pressedKeyNum);
+    if(pressedKeyNum == 87){    //W  //TODO: Make check off of settings
+        moveShipCommand(1);//TODO: Get to work with single byte
+    }else if(pressedKeyNum == 65){//A
+        moveShipCommand(4);
+    }else if(pressedKeyNum == 83){//S
+        moveShipCommand(3);
+    }else if(pressedKeyNum == 68){//D
+        moveShipCommand(2);
+    }else if(UpgradeChecks.checkFromPosistion(pressedKeyNum, resources)){
         purchaseUpgrade(pressedKeyNum, resources);
     }
 }

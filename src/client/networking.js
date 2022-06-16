@@ -33,8 +33,6 @@ export const connect = onGameOver => (
     socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (combineMaterials) => {
         // console.log("rocks = "+JSON.parse(combineMaterials.rocks));
         // console.log("metal = "+JSON.parse(combineMaterials.metal));
-                    console.log(JSON.parse(combineMaterials.rocks)+":::::::::::::::::::::::");
-
         resources.rocks = JSON.parse(combineMaterials.rocks);
         resources.metal = JSON.parse(combineMaterials.metal);
         resources.nickel = JSON.parse(combineMaterials.nickel);
@@ -72,6 +70,10 @@ export const updateClick = throttle(20, isClicked => {
 //   socket.emit(Constants.MSG_TYPES.UPGRADE_ATTEMPT, dir);
 // });
 
-export const purchaseUpgrade = slot => {
-  socket.emit(Constants.MSG_TYPES.UPGRADE_ATTEMPT, slot);
-};
+export const purchaseUpgrade = throttle(20, slot => {
+    socket.emit(Constants.MSG_TYPES.UPGRADE_ATTEMPT, slot);
+});
+
+export const moveShipCommand = throttle(20, cardinalDirection => {
+    socket.emit(Constants.MSG_TYPES.INPUT_MOVEMENT, cardinalDirection);
+});

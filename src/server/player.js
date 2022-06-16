@@ -12,22 +12,29 @@ class Player extends ObjectClass {
       // }else{
         this.hp = Constants.PLAYER_MAX_HP;
       // }
-    // this.username = username+" ("+id+")";//@CHNAGED
-    this.fireCooldown = 0;
-    this.score = 0;
+
       
+//COUNTERS
+    this.score = 0;
+//UPDATES
     this.updatedRocks = false;
+//SHIP DATA
+    this.mass = 5_000;
+//POLAR MOVEMENT
+    this.speed = 0;
+    this.direction = 0;
+//WEAPONS
+    this.fireCooldown = 0;
+    this.armamentDirection = 0;
+//TIMERS
+    this.boostSpeedTotalEnegeryAdd = 0;
+    this.boostTime = 0;
+//RESOURCES
     this.resources = {
         rocks: 0,
         metal: 0,
         nickel: 0
     };
-    this.resources.rocks = 0;
-    this.resources.metal = 0;
-    this.resources.nickel = 0;
-
-    this.boostSpeedTotalEnegeryAdd = 0;
-    this.boostTime = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -40,7 +47,11 @@ class Player extends ObjectClass {
     //UPDATE SPEED & ENGINE DISPLAY
     if(this.boostTime > 0){
         this.boostTime-=1;
-        this.speed
+        var energyChange = Math.ceil(boostSpeedTotalEnegeryAdd/boostTime);
+        boostSpeedTotalEnegeryAdd -= energyChange;
+        this.energyForSpeed += boostSpeedTotalEnegeryAdd;
+
+        recaculateSpeed();
     }
       
     // Make sure the player stays in bounds
@@ -51,22 +62,77 @@ class Player extends ObjectClass {
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0 ) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-      return new Bullet(this.id, this.x, this.y, this.direction, Constants.BULLET_TIME_TICKS);
+      return new Bullet(this.id, this.x, this.y, this.armamentDirection, Constants.BULLET_TIME_TICKS);
     }
 
     return null;
   }
 
-  takeBulletDamage() {
-    this.hp -= Constants.BULLET_DAMAGE;
-  }
+    takeBulletDamage() {
+        this.hp -= Constants.BULLET_DAMAGE;
+    }
+
+    recaculateSpeed(newMass){
+        this.speed = (this.speed*this.mass) / newMass;
+    }
+    updateThrust(direction, thrustEnergy){
+        console.log("direction = "+direction);
+        console.log("thrustEnergy = "+thrustEnergy);
+
+        // if(direction){
+            direction = (direction-1)*90;
+        // }
+        this.addVelocityVector(direction, thrustEnergy);
+        // this.recaculateSpeed();
+    }
+    setArmamentDirection(newDirection){
+        this.armamentDirection = newDirection;
+    }
+    
+    
     boost(ticks){
         this.boostSpeed += ticks;
     }
+    
+    addVelocityVector(angle, magnitude){//@@@//
+        // angle = angle*(180/Math.PI);
+        // angle = 0;
+        magnitude = 5;
 
+        angle = angle * 0.0174532925199;
+        //Convert to Cartesion
+        var existingX = Math.cos(this.direction)*this.speed;
+        var existingY = Math.sin(this.direction)*this.speed;
+
+        var addingX = Math.cos(angle)*magnitude;
+        var addingY = Math.sin(angle)*magnitude;
+        console.log("====================");
+        console.log("Current X = "+existingX);
+        console.log("Current Y = "+existingY);
+        console.log("Current A = "+this.direction);
+        console.log("======");
+        console.log("Adding  X = "+addingX);
+        console.log("Adding  Y = "+addingY);
+        console.log("Adding  A = "+angle);
+        console.log("======");
+
+        existingX += addingX;
+        existingY += addingY;
+
+        // existingX = Math.floor(existingX * 1000) / 1000;
+        // existingY = Math.floor(existingY * 1000) / 1000;
+        
+        console.log("New     X = "+existingX);
+        console.log("New     Y = "+existingY);
+    
+        this.direction = Math.atan2(existingY,existingX);//*0.01745329252;
+        console.log("New     A = "+this.direction);
+        this.speed = Math.sqrt(Math.pow(existingX,2)+Math.pow(existingY,2));
+    }
+    
     purchaseUpgrade(upgradeSlot){
-        console.log("upgradeSlot = "+ upgradeSlot);
-        console.log("Inside of purchaseUpgrable about to do upgradeChecks on server side");
+        // console.log("upgradeSlot = "+ upgradeSlot);
+        // console.log("Inside of purchaseUpgrable about to do upgradeChecks on server side");
         if (!upgradeChecks.checkFromPosistion(upgradeSlot,this.resources)) return;
         
         if(upgradeSlot==49){//TODO: Make as switch
@@ -88,7 +154,15 @@ class Player extends ObjectClass {
                 this.hp = Math.min(this.hp, Constants.MAX_UPGRADEABLE_HP)
                 this.updatedRock = false;
             }
-            
+        }else if(upgradeSlot==52){/*4*/
+            this.direction = 0;
+            this.speed = 0;
+        }else if(upgradeSlot==53){/*5*/
+            this.addVelocityVector(-90,10);
+        }else if(upgradeSlot==54){
+        }else if(upgradeSlot==55){
+        }else if(upgradeSlot==56){
+        }else if(upgradeSlot==57){
         }else if(upgradeSlot==72){
             this.resources.metal += 50
             
