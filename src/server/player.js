@@ -7,7 +7,7 @@ class Player extends ObjectClass {
   constructor(id, username, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
     this.username = username;
-      // if(username == "422"){
+          // if(username == "422"){
       //   this.hp = Constants.PLAYER_MAX_HP*10;
       // }else{
         this.hp = Constants.PLAYER_MAX_HP;
@@ -18,6 +18,25 @@ class Player extends ObjectClass {
     this.score = 0;
 //UPDATES
     this.updatedRocks = false;
+//MOVEMENT FOR RENDER
+    this.thrusters = {
+        north:{
+            active: 0,
+            angle: 0,
+        },
+        east:{
+            active: 0,
+            angle: 90,
+        },
+        south:{
+            active: 0,
+            angle: 180,
+        },
+        west:{
+            active: 0,
+            angle: 270,
+        }
+    };
 //SHIP DATA
     this.mass = 5_000;
 //POLAR MOVEMENT
@@ -40,7 +59,7 @@ class Player extends ObjectClass {
   // Returns a newly created bullet, or null.
   update(dt) {
     super.update(dt);
-
+      
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;
 
@@ -53,6 +72,14 @@ class Player extends ObjectClass {
 
         recaculateSpeed();
     }
+
+    //UPDATE THRUST DISLAY
+      //TODO: Make else if?
+    for (let x in this.thrusters) {
+        if(this.thrusters[x].active > 0){
+            // this.thrusters[x].active -= 1;
+        }
+    } 
       
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
@@ -76,12 +103,29 @@ class Player extends ObjectClass {
         this.speed = (this.speed*this.mass) / newMass;
     }
     updateThrust(direction, thrustEnergy){
-        console.log("direction = "+direction);
-        console.log("thrustEnergy = "+thrustEnergy);
+        // console.log("direction = "+direction);
+        // console.log("thrustEnergy = "+thrustEnergy);
 
-        // if(direction){
-            direction = (direction-1)*90;
-        // }
+        switch(direction){
+            case 1:
+                direction = this.thrusters.north.angle;
+                this.thrusters.north.active = 100;
+                break;
+            case 2:
+                direction = this.thrusters.east.angle;
+                this.thrusters.east.active = 10;
+                break;
+            case 3:
+                direction = this.thrusters.south.angle;
+                this.thrusters.south.active = 10;
+                break;
+            case 4:
+                direction = this.thrusters.west.angle;
+                this.thrusters.west.active = 10;
+                break;
+            default://TODO: Change
+                break;
+        }
         this.addVelocityVector(direction, thrustEnergy);
         // this.recaculateSpeed();
     }
@@ -94,11 +138,9 @@ class Player extends ObjectClass {
         this.boostSpeed += ticks;
     }
     
-    addVelocityVector(angle, magnitude){//@@@//
+    addVelocityVector(angle, magnitude){//TODO: Make more efficent
+        const DEBUG_MOVEMENT = false;
         // angle = angle*(180/Math.PI);
-        // angle = 0;
-        magnitude = 5;
-
         angle = angle * 0.0174532925199;
         //Convert to Cartesion
         var existingX = Math.cos(this.direction)*this.speed;
@@ -106,27 +148,28 @@ class Player extends ObjectClass {
 
         var addingX = Math.cos(angle)*magnitude;
         var addingY = Math.sin(angle)*magnitude;
-        console.log("====================");
-        console.log("Current X = "+existingX);
-        console.log("Current Y = "+existingY);
-        console.log("Current A = "+this.direction);
-        console.log("======");
-        console.log("Adding  X = "+addingX);
-        console.log("Adding  Y = "+addingY);
-        console.log("Adding  A = "+angle);
-        console.log("======");
-
+        if(DEBUG_MOVEMENT){
+            console.log("====================");
+            console.log("Current X = "+existingX);
+            console.log("Current Y = "+existingY);
+            console.log("Current A = "+this.direction);
+            console.log("======");
+            console.log("Adding  X = "+addingX);
+            console.log("Adding  Y = "+addingY);
+            console.log("Adding  A = "+angle);
+            console.log("======");
+        }
         existingX += addingX;
         existingY += addingY;
-
         // existingX = Math.floor(existingX * 1000) / 1000;
         // existingY = Math.floor(existingY * 1000) / 1000;
-        
-        console.log("New     X = "+existingX);
-        console.log("New     Y = "+existingY);
-    
+        if(DEBUG_MOVEMENT){
+            console.log("New     X = "+existingX);
+            console.log("New     Y = "+existingY);
+        }
         this.direction = Math.atan2(existingY,existingX);//*0.01745329252;
-        console.log("New     A = "+this.direction);
+        if(DEBUG_MOVEMENT)
+            console.log("New     A = "+this.direction);
         this.speed = Math.sqrt(Math.pow(existingX,2)+Math.pow(existingY,2));
     }
     
@@ -191,12 +234,40 @@ class Player extends ObjectClass {
   }
 
   serializeForUpdate() {
+    // console.log("~~~~ = "+this.thrusters.north.active);
+
     return {
-      ...(super.serializeForUpdate()),
-      direction: this.direction,
-      hp: this.hp,
-      rocks: this.resources.rocks,
+    // const returnable = {
+        ...(super.serializeForUpdate()),
+        direction: this.direction,
+        hp: this.hp,
+        rocks: this.resources.rocks,
+        // thrusters: this.thrusters
+        northActive: this.thrusters.north.active,
+        eastActive: this.thrusters.east.active,
+        southActive: this.thrusters.south.active,
+        westActive: this.thrusters.west.active,
+        // // {
+        //     north:{
+        //         active: this.thrusters.north.active,
+        //         angle: this.thrusters.north.angle,
+        //     },
+        //     east:{
+        //         active: this.thrusters.east.active,
+        //         angle: this.thrusters.east.angle,
+        //     },
+        //     south:{
+        //         active: this.thrusters.south.active,
+        //         angle: this.thrusters.south.angle,
+        //     },
+        //     west:{
+        //         active: this.thrusters.west.active,
+        //         angle: this.thrusters.west.angle,
+        //     }
+        // }
     };
+
+    // return returnable;
   }
 }
 

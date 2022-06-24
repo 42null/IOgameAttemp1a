@@ -64,7 +64,7 @@ class Game {
             //         return;
             // }
             const newDirection = cardinalDirection;//(cardinalDirection-1)*90;
-            console.log("newDirection = "+newDirection);
+            // console.log("newDirection = "+newDirection);
             this.players[socket.id].updateThrust(newDirection,10);
         }
     }

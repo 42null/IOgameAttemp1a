@@ -26,7 +26,7 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions));
 let animationFrameRequestId;
 
 function render() {
-  const { me, others, bullets, astroids } = getCurrentState();
+  const { me, others, bullets, astroids} = getCurrentState();
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
@@ -38,7 +38,6 @@ function render() {
 
     // Draw all bullets
     bullets.forEach(renderBullet.bind(null, me));
-
     // Draw all players
     renderPlayer(me, me);
     others.forEach(renderPlayer.bind(null, me));
@@ -78,22 +77,34 @@ function renderBackground(x, y) {
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction } = player;
-  const canvasX = canvas.width / 2 + x - me.x;
-  const canvasY = canvas.height / 2 + y - me.y;
-
-  // Draw ship
-  context.save();
-  context.translate(canvasX, canvasY);
-  context.rotate(direction);
-  const use_player_radius = Math.round(PLAYER_RADIUS*(player.hp/PLAYER_MAX_HP))+5;
-  context.drawImage(
+    const { x, y, direction, /*thrusters*/northActive, eastActive, southActive, westActive } = player;
+    const canvasX = canvas.width / 2 + x - me.x;
+    const canvasY = canvas.height / 2 + y - me.y;
+    
+    // Draw ship
+    context.save();
+    context.translate(canvasX, canvasY);
+    context.rotate(direction);
+    const use_player_radius = Math.round(PLAYER_RADIUS*(player.hp/PLAYER_MAX_HP))+5;
+    context.drawImage(
     getAsset('ship.svg'),
-    -use_player_radius,
-    -use_player_radius,
-    use_player_radius * 2,
-    use_player_radius * 2,
-  );
+        -use_player_radius,
+        -use_player_radius,
+        use_player_radius * 2,
+        use_player_radius * 2,
+    );
+    // if(player.status.movement.up==1){
+    console.log("player.thrusters.north.active = "+northActive);
+    if(northActive > 0){
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_player_radius,
+            -use_player_radius,
+            use_player_radius * 2,
+            use_player_radius * 2,
+        );
+    }
+
   context.restore();
 
   // Draw health bar

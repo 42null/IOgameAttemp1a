@@ -5,6 +5,7 @@ const ASSET_NAMES = [
     'astroid.svg',
     'greyastroid.svg',
     'tealGreenAstroid.svg',
+    'plumes/exaust_gif_1.gif',
 ];
 
 const assets = {};
