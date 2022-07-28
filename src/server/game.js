@@ -101,6 +101,11 @@ class Game {
       }
     });
 
+    this.astroids.forEach(astroid => {
+      astroid.update();
+    });
+      
+      
     // Apply collisions, give players score for hitting bullets
     const {destroyedBullets, destroyedAstroids} = applyBulletCollisions(Object.values(this.players),Object.values(this.astroids), this.bullets);
 

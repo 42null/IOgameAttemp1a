@@ -17,7 +17,8 @@ module.exports = Object.freeze({
     UPGRADE_COLOR_COST: 1000,//N
     UPGRADE_HP_COST: 50,//M
 
-  MAP_SIZE: 5000,
+  // MAP_SIZE: 10000,
+  MAP_SIZE: 1000,
   MSG_TYPES: {
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',

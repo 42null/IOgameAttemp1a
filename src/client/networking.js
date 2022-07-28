@@ -40,6 +40,9 @@ export const connect = onGameOver => (
         document.getElementById('metal').innerHTML = 'Metal: '+resources.metal;
         document.getElementById('nickel').innerHTML = 'Nickel: '+resources.nickel;
     });
+    socket.on(Constants.MSG_TYPES.UPDATE_ROCKS, (combineMaterials) => {
+        
+    });
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {
       console.log('Disconnected from server.');

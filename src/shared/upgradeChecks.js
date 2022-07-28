@@ -49,6 +49,7 @@ const checkFromPosistion = (inputNumber, resoucesForClientSide) => {
         }else if(inputNumber==55){
         }else if(inputNumber==56){
         }else if(inputNumber==57){
+            throw new Error();
         }
     }else if(inputNumber==72){
         return true;

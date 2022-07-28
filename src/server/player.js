@@ -12,9 +12,9 @@ class Player extends ObjectClass {
       // }else{
         this.hp = Constants.PLAYER_MAX_HP;
       // }
+    this.fliped = false;
 
-      
-//COUNTERS
+      //COUNTERS
     this.score = 0;
 //UPDATES
     this.updatedRocks = false;
@@ -27,6 +27,7 @@ class Player extends ObjectClass {
         east:{
             active: 0,
             angle: 90,
+            // angle: 120,
         },
         south:{
             active: 0,
@@ -35,6 +36,7 @@ class Player extends ObjectClass {
         west:{
             active: 0,
             angle: 270,
+            // angle: 250,
         }
     };
 //SHIP DATA
@@ -62,6 +64,7 @@ class Player extends ObjectClass {
       
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;
+              this.energyForSpeed -= 1;//TODO: make dust
 
     //UPDATE SPEED & ENGINE DISPLAY
     if(this.boostTime > 0){
@@ -77,7 +80,7 @@ class Player extends ObjectClass {
       //TODO: Make else if?
     for (let x in this.thrusters) {
         if(this.thrusters[x].active > 0){
-            // this.thrusters[x].active -= 1;
+            this.thrusters[x].active -= 20;
         }
     } 
       
@@ -102,32 +105,45 @@ class Player extends ObjectClass {
     recaculateSpeed(newMass){
         this.speed = (this.speed*this.mass) / newMass;
     }
-    updateThrust(direction, thrustEnergy){
+    updateThrust(direction_, thrustEnergy){
         // console.log("direction = "+direction);
         // console.log("thrustEnergy = "+thrustEnergy);
-
-        switch(direction){
+        
+        switch(direction_){
             case 1:
-                direction = this.thrusters.north.angle;
+                direction_ = this.thrusters.north.angle;
                 this.thrusters.north.active = 100;
                 break;
             case 2:
-                direction = this.thrusters.east.angle;
-                this.thrusters.east.active = 10;
+                direction_ = this.thrusters.east.angle;
+                this.thrusters.east.active = 100;
                 break;
             case 3:
-                direction = this.thrusters.south.angle;
-                this.thrusters.south.active = 10;
+                direction_ = this.thrusters.south.angle;
+                this.thrusters.south.active = 100;
                 break;
             case 4:
-                direction = this.thrusters.west.angle;
-                this.thrusters.west.active = 10;
+                direction_ = this.thrusters.west.angle;
+                this.thrusters.west.active = 100;
                 break;
             default://TODO: Change
                 break;
         }
-        this.addVelocityVector(direction, thrustEnergy);
+        let oldDirectionSighn = this.direction;//(this.direction >= 0 && this.direction <= 90);
         // this.recaculateSpeed();
+
+        //TODO: Make more efficent
+        this.addVelocityVector((this.fliped? -1:1)*(this.direction*57.29578) + direction_, thrustEnergy);
+        this.addVelocityVector((this.direction*57.29578) + direction_, (this.fliped? -1:1)*thrustEnergy);
+
+                if(Math.abs(oldDirectionSighn - this.direction)<3.141594 && Math.abs(oldDirectionSighn - this.direction)>3.141592){
+            // this.fliped = !this.fliped;
+        }
+        
+        // console.log(this.direction);
+        // console.log(this.speed);
+        // console.log(Math.abs(oldDirectionSighn - this.direction))
+        // console.log(this.fliped);
     }
     setArmamentDirection(newDirection){
         this.armamentDirection = newDirection;
@@ -207,7 +223,7 @@ class Player extends ObjectClass {
         }else if(upgradeSlot==56){
         }else if(upgradeSlot==57){
         }else if(upgradeSlot==72){
-            this.resources.metal += 50
+            this.resources.metal += 500
             
         }
     }
