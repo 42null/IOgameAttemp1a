@@ -18,7 +18,7 @@ class Astroid extends ObjectClass {
     // this.direction = Math.round(Math.random() * 6.283185 * 100);
     // this.speed = Math.trunc(Math.random() * 201);
       this.speed = 1;
-      // this.direction = 1;
+      this.direction = 1;
   }
   // constructor(parentID, x, y, dir) {
   //   super(shortid(), x, y, dir, Constants.BULLET_SPEED);
@@ -26,13 +26,19 @@ class Astroid extends ObjectClass {
   // }
   // Returns a newly created bullet, or null.
   update(dt) {
-    // // super.update(dt);
+    // super.update(dt);
+    // this.speed=1;
+    //   this.direction=1;
+      // this.x+=1;
+      // this.y+=1;
     // this.x += dt * this.speed * Math.sin(this.direction);
     // this.y -= dt * this.speed * Math.cos(this.direction);
-    // // Make sure the player stays in bounds
+    this.x += this.speed * Math.sin(this.direction);
+    this.y -= this.speed * Math.cos(this.direction);
+    // Make sure the player stays in bounds
     //   // TODO: Nessecery?
-    // this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
-    // this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
+    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
     // // console.log("this.speed = "+this.speed);
     //   // this.speed=1;
     return null;

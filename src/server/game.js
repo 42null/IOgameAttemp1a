@@ -31,6 +31,7 @@ class Game {
 
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
     this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));
+    // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(10,2)/30),10,1000,-2));
   }
 
   addPlayer(socket, username) {
