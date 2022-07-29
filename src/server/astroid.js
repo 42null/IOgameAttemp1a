@@ -15,10 +15,10 @@ class Astroid extends ObjectClass {
     this.type = id.charAt(0);
     this.hp = size;
       // console.log(this.type);
-    // this.direction = Math.round(Math.random() * 6.283185 * 100);
-    // this.speed = Math.trunc(Math.random() * 201);
-      this.speed = 1;
-      this.direction = 1;
+    this.direction = Math.round(Math.random() * 6.283185 * 100);
+    this.speed = Math.trunc(Math.random() * 50)/50;
+      // this.speed = 1;
+      // this.direction = 1;
   }
   // constructor(parentID, x, y, dir) {
   //   super(shortid(), x, y, dir, Constants.BULLET_SPEED);
@@ -55,7 +55,7 @@ class Astroid extends ObjectClass {
 // console.log("Size = "+this.size);
 // console.log("Hp = "+this.hp);
 
-    this.speed = 10;
+    // this.speed = 10;
     return false;
   }
 

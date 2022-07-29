@@ -334,7 +334,7 @@
 
 
 
-
+//@@@
 
 
 
@@ -405,7 +405,8 @@ function renderBackground(x, y) {
   //   backgroundY,
   //   MAP_SIZE / 2,
   // );
-  const backgroundGradient = context.createRadialGradient(
+  const backgroundGradient = context.createRadialGradient
+      (
     backgroundX,
     backgroundY,
     MAP_SIZE / 10,
@@ -417,6 +418,27 @@ function renderBackground(x, y) {
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.strokeStyle = "#FF0000";
+    context.strokeRect(20, 20, 150, 100);
+    
+    context.beginPath();
+    context.moveTo(canvas.width/2, canvas.height/2);
+    context.lineTo(backgroundX, backgroundY);
+    context.strokeStyle = "pink";
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(backgroundX, 10);
+    context.lineTo(backgroundX, backgroundY);
+    context.strokeStyle = "red";
+    context.stroke();
+    
+    context.beginPath();
+    context.moveTo(backgroundX, backgroundY);
+    context.lineTo(backgroundX, canvas.height-10);
+    context.strokeStyle = "black";
+    context.stroke();
 }
 
 // Renders a ship at the given coordinates
