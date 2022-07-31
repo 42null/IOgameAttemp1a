@@ -7,6 +7,7 @@ module.exports = Object.freeze({
     
     BULLET_RADIUS: 3,
     BULLET_SPEED: 800,
+    BULLET_MASS: 5,
     BULLET_DAMAGE: 10,
     BULLET_TIME_TICKS: 60,
     
@@ -18,7 +19,7 @@ module.exports = Object.freeze({
     UPGRADE_HP_COST: 50,//M
 
   MAP_SIZE: 10000,
-  // MAP_SIZE: 200,
+  // MAP_SIZE: 1000,
   MSG_TYPES: {
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',

@@ -36,15 +36,23 @@ class Astroid extends ObjectClass {
     this.x += this.speed * Math.sin(this.direction);
     this.y -= this.speed * Math.cos(this.direction);
     // Make sure the player stays in bounds
-    //   // TODO: Nessecery?
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+
     // // console.log("this.speed = "+this.speed);
     //   // this.speed=1;
+    if(this.x < 0 || this.x > Constants.MAP_SIZE){
+        this.direction = 6.283185-this.direction;
+        // this.speed = 6.283185-this.direction;
+    }
+    if(this.y < 0 || this.y > Constants.MAP_SIZE){
+              this.direction = 3.1415925-this.direction;
+    }
+
+    // this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
+    // this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
     return null;
   }
 
-  takeBulletDamage() {
+  takeBulletDamage(bullet) {
     this.hp -= Constants.BULLET_DAMAGE;
     if(this.hp <= 0){
         return true;
@@ -55,7 +63,7 @@ class Astroid extends ObjectClass {
 // console.log("Size = "+this.size);
 // console.log("Hp = "+this.hp);
 
-    // this.speed = 10;
+    super.addVelocityVectorRad(bullet.getDirection(), 0.1);//bullet.getVelocity()/100);
     return false;
   }
 

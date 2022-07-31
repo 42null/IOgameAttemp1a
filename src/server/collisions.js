@@ -16,7 +16,7 @@ function applyBulletCollisions(players, astroids, bullets) {//TODO: Good off of 
         bullet.hit = "A"+astroid.type;
           // console.log(bullet.hit+"~~~")
         destroyedBullets.push(bullet);
-        if(astroid.takeBulletDamage()){
+        if(astroid.takeBulletDamage(bullet)){
             destroyedAstroids.push(astroid);
         }
         break;

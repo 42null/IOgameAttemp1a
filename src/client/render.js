@@ -1,6 +1,4 @@
-// // Learn more about this file at:
-// // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering
-// import { debounce } from 'throttle-debounce';
+// // Learn more about this file at:// // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering// import { debounce } from 'throttle-debounce';
 // import { getAsset } from './assets';
 // import { getCurrentState } from './state';
 
@@ -419,6 +417,17 @@ function renderBackground(x, y) {
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+
+      const backgroundGradient2 = context.createRadialGradient
+      (
+    backgroundX,
+    backgroundY,
+    MAP_SIZE / 10,
+    backgroundX,
+    backgroundY,
+    MAP_SIZE / 2,
+  );
+
     context.strokeStyle = "#FF0000";
     context.strokeRect(20, 20, 150, 100);
     
@@ -428,15 +437,35 @@ function renderBackground(x, y) {
     context.strokeStyle = "pink";
     context.stroke();
 
-    context.beginPath();
-    context.moveTo(backgroundX, 10);
-    context.lineTo(backgroundX, backgroundY);
-    context.strokeStyle = "red";
-    context.stroke();
+    context.strokeStyle = "#7c136030";
+    for(var i=-100;i<100;i++){
+        context.beginPath();
+        context.moveTo(backgroundX+i*50, 10);
+        context.lineTo(backgroundX+i*50, canvas.height-10);
+        context.stroke();
+        
+        context.beginPath();
+        context.moveTo(10, backgroundY+i*50);
+        context.lineTo(canvas.width-10, backgroundY+i*50);
+        context.stroke();
+    }
+
     
     context.beginPath();
-    context.moveTo(backgroundX, backgroundY);
+    context.moveTo(backgroundX, 10);
     context.lineTo(backgroundX, canvas.height-10);
+    context.strokeStyle = "black";
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(backgroundX, backgroundY);
+    context.lineTo(canvas.width-10, backgroundY);
+    context.strokeStyle = "black";
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(10, backgroundY);
+    context.lineTo(backgroundX, backgroundY);
     context.strokeStyle = "black";
     context.stroke();
 }
