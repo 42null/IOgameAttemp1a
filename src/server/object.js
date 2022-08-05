@@ -1,10 +1,15 @@
 class Object {
-  constructor(id, x, y, dir, speed) {
+  constructor(id, x, y, dir, speed, mass) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.direction = dir;
     this.speed = speed;
+    if(!mass){
+        this.mass = 999999999;
+    }else{
+        this.mass = mass;
+    }
   }
 
   update(dt) {
@@ -61,14 +66,15 @@ class Object {
     addVelocityVectorRad(angle, magnitude){//TODO: Make more efficent
         const DEBUG_MOVEMENT = false;
         //Convert to Cartesion
-        var existingX = Math.cos(this.direction)*this.speed;
-        var existingY = Math.sin(this.direction)*this.speed;
+        var existingX = Math.cos(this.direction)*this.speed*this.mass;
+        var existingY = Math.sin(this.direction)*this.speed*this.mass;
 
         var addingX = Math.cos(angle)*magnitude;
         var addingY = Math.sin(angle)*magnitude;
         existingX += addingX;
         existingY += addingY;
-        // existingX = Math.floor(existingX * 1000) / 1000;
+        existingX /= this.mass;
+        existingY /= this.mass;        // existingX = Math.floor(existingX * 1000) / 1000;
         // existingY = Math.floor(existingY * 1000) / 1000;
         this.direction = Math.atan2(existingY,existingX);//*0.01745329252;
         this.speed = Math.sqrt(Math.pow(existingX,2)+Math.pow(existingY,2));

@@ -5,7 +5,7 @@ const Constants = require('../shared/constants');
 class Bullet extends ObjectClass {
     
   constructor(parentID, x, y, dir, ticksLeft, mass) {
-    super(shortid(), x, y, dir, Constants.BULLET_SPEED);
+    super(shortid(), x, y, dir, Constants.BULLET_SPEED, mass);
     this.parentID = parentID;
     this.ticksLeft = ticksLeft;
     this.hit = 0;
@@ -20,10 +20,14 @@ class Bullet extends ObjectClass {
         return this.direction;
     }
 
-    getVelocity(){
-        return Constants.BULLET_SPEED;
+    getVelocityEnegery(){
+        return this.speed*this.mass;
     }
 
+    getSpeed(){
+        return this.speed;
+    }
+    
     getMass(){
         return this.mass;
     }

@@ -5,10 +5,12 @@ class Astroid extends ObjectClass {
     hp = -1;
     size = -1;
     type = 0; //Default
+    mass = -1;
     
   constructor(id, size, x, y, type) {
     // super("A"+type+id, x, y, Math.random() * 2 * Math.PI, 0);
-    super("A"+id, x, y, Math.random() * 2 * Math.PI, 70);
+    super("A"+id, x, y, Math.random() * 2 * Math.PI, 70, size*100);//Size as mass
+    this.mass = size*100;
   // this.x = x;
   //   this.y = y;
     // this.type = type;
@@ -63,7 +65,7 @@ class Astroid extends ObjectClass {
 // console.log("Size = "+this.size);
 // console.log("Hp = "+this.hp);
 
-    super.addVelocityVectorRad(bullet.getDirection(), 0.1);//bullet.getVelocity()/100);
+    super.addVelocityVectorRad(bullet.getDirection(), bullet.getVelocityEnegery());//bullet.getVelocity()/100);
     return false;
   }
 
