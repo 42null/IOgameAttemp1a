@@ -1,345 +1,3 @@
-// // Learn more about this file at:// // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering// import { debounce } from 'throttle-debounce';
-// import { getAsset } from './assets';
-// import { getCurrentState } from './state';
-
-// const Constants = require('../shared/constants');
-
-// const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
-
-// // Get the canvas graphics context
-// const canvas = document.getElementById('game-canvas');
-// const context = canvas.getContext('2d');
-// setCanvasDimensions();
-
-// function setCanvasDimensions() {
-//   // On small screens (e.g. phones), we want to "zoom out" so players can still see at least
-//   // 800 in-game units of width.
-//   const scaleRatio = Math.max(1, 800 / window.innerWidth);
-//   canvas.width = scaleRatio * window.innerWidth;
-//   canvas.height = scaleRatio * window.innerHeight;
-// }
-
-// window.addEventListener('resize', debounce(40, setCanvasDimensions));
-
-// let animationFrameRequestId;
-
-// function render() {
-//   const { me, others, bullets, astroids/*, ais*/} = getCurrentState();
-//   if (me) {
-//     // Draw background
-//     renderBackground(me.x, me.y);
-
-//     // Draw boundaries
-//     context.strokeStyle = 'black';
-//     context.lineWidth = 1;
-//     context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
-
-//     // Draw all bullets
-//     bullets.forEach(renderBullet.bind(null, me));
-//     // Draw all players
-//     renderPlayer(me, me);
-//     others.forEach(renderPlayer.bind(null, me));
-
-//     // Draw all astroids
-//     astroids.forEach(renderAstroid.bind(null, me));
-
-//     // ais.forEach(renderAI.bind(null, me));
-//   }
-
-//   // Rerun this render function on the next frame
-//   animationFrameRequestId = requestAnimationFrame(render);
-// }
-
-// function renderBackground(x, y) {
-//   const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
-//   const backgroundY = MAP_SIZE / 2 - y + canvas.height / 2;
-//   // const backgroundGradient = context.createRadialGradient(
-//   //   backgroundX,
-//   //   backgroundY,
-//   //   MAP_SIZE / 10,ais
-//   //   backgroundX,
-//   //   backgroundY,
-//   //   MAP_SIZE / 2,
-//   // );
-//   const backgroundGradient = context.createRadialGradient(
-//     backgroundX,
-//     backgroundY,
-//     MAP_SIZE / 10,
-//     backgroundX,
-//     backgroundY,
-//     MAP_SIZE / 2,
-//   );
-//   backgroundGradient.addColorStop(0, '#55cf9c');
-//   backgroundGradient.addColorStop(1, 'gray');
-//   context.fillStyle = backgroundGradient;
-//   context.fillRect(0, 0, canvas.width, canvas.height);
-// }
-
-// // Renders a ship at the given coordinates
-// function renderPlayer(me, player) {
-//     const { x, y, direction, /*thrusters*/northActive, eastActive, southActive, westActive, fliped } = player;
-//     const canvasX = canvas.width / 2 + x - me.x;
-//     const canvasY = canvas.height / 2 + y - me.y;
-    
-//     // Draw ship
-//     context.save();
-//     context.translate(canvasX, canvasY);
-//     context.rotate(direction);
-//     const use_player_radius = Math.round(PLAYER_RADIUS*(player.hp/PLAYER_MAX_HP))+5;
-//     context.drawImage(
-//     getAsset('ship.svg'),
-//         -use_player_radius,
-//         -use_player_radius,
-//         use_player_radius * 2,
-//         use_player_radius * 2,
-//     );
-//     // if(player.status.movement.up==1){
-//     // console.log("player.thrusters.north.active = "+northActive);
-    
-//     if(northActive > 0){
-//         context.drawImage(
-//             getAsset('plumes/exaust_gif_1.gif'),
-//             -use_player_radius,
-//             0,
-//             use_player_radius * 2,
-//             use_player_radius * 2,
-//         );
-//     }
-//     context.rotate(90*0.01745329);
-//     if(eastActive > 0){
-//         context.drawImage(
-//             getAsset('plumes/exaust_gif_1.gif'),
-//             -use_player_radius,
-//             0,
-//             use_player_radius * 2,
-//             use_player_radius * 2,
-//         );
-//     }
-//     context.rotate(90*0.01745329);
-//     if(southActive > 0){
-//         context.drawImage(
-//             getAsset('plumes/exaust_gif_1.gif'),
-//             -use_player_radius,
-//             0,
-//             use_player_radius * 2,
-//             use_player_radius * 2,
-//         );
-//     }
-//     context.rotate(90*0.01745329);
-//     if(westActive > 0){
-//         context.drawImage(
-//             getAsset('plumes/exaust_gif_1.gif'),
-//             -use_player_radius,
-//             0,
-//             use_player_radius * 2,
-//             use_player_radius * 2,
-//         );
-//     }
-//     // if(fliped){
-//     //     context.drawImage(
-//     //         getAsset('plumes/exaust_gif_1.gif'),
-//     //         -use_player_radius,
-//     //         0,
-//     //         use_player_radius * 3,
-//     //         use_player_radius * 3,
-//     //     );
-//     // }
-//   context.restore();
-
-//   // Draw health bar
-//     context.fillStyle = '#3ec452';
-//     context.fillRect(
-//         canvasX - PLAYER_RADIUS - 1,
-//         canvasY + PLAYER_RaisADIUS + 7,
-//         PLAYER_RADIUS * 2+2,
-//         4,
-//     );
-    
-//   context.fillStyle = 'white';
-//     context.fillRect(
-//         canvasX - PLAYER_RADIUS,
-//         canvasY + PLAYER_RADIUS + 8,
-//         PLAYER_RADIUS * 2,
-//         2,
-//     );
-//     context.fillStyle = '#3ec452';    
-//   context.fillRect(
-//     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
-//     canvasY + PLAYER_RADIUS + 7,
-//     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP)+1,
-//     4,
-//   );
-//   if(player.hp < PLAYER_MAX_HP){
-//     context.fillStyle = 'red';
-//   }else{
-//     context.fillStyle = 'orange';
-//   }
-//   context.fillRect(
-//     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP - 1,
-//     canvasY + PLAYER_RADIUS + 8,
-//     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP)+1,
-//     2,
-//   );
-//   // context.fillStyle = 'green';
-//   // context.fillRect(
-//   //   canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
-//   //   canvasY + PLAYER_RADIUS + 8,
-//   //   PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
-//   //   2,
-//   // );
-// }
-
-// function renderBullet(me, bullet) {
-//   const { x, y } = bullet;
-//   context.drawImage(
-//     // getAsset('bullet.svg'),
-//     getAsset('bulletLime1.svg'),
-//     canvas.width / 2 + x - me.x - BULLET_RADIUS,
-//     canvas.height / 2 + y - me.y - BULLET_RADIUS,
-//     BULLET_RADIUS * 2,
-//     BULLET_RADIUS * 2,
-//   );
-// }
-
-
-// // function renderAI(me, astroid ) {
-// // // const { x, y, direction } = astroid;
-// // //   const canvasX = canvas.width / 2 + x - me.x;
-// // //   const canvasY = canvas.height / 2 + y - me.y;
-
-// // //   // Draw ship
-// // //   context.save();
-// // //   context.translate(canvasX, canvasY);
-// // //   context.rotate(direction);
-
-// // //   const displaySize = 500;//Math.trunc(Math.log(astroid.hp+3)*12);
-
-// // //     astroidAsset = getAsset('astroid.svg');
-// // //   context.drawImage(
-// // //     // getAsset('greyastroid.svg'),
-// // //     astroidAsset,
-// // //     -displaySize,//TODO: Get to work with .size
-// // //     -displaySize,
-// // //     displaySize * 2,
-// // //     displaySize * 2,
-// // //   );
-// // //   context.restore();
-
-// //   // // Draw health bar
-// //   // context.fillStyle = '#15f2fd ';
-// //   // context.fillRect(
-// //   //   canvasX - PLAYER_RADIUS,
-// //   //   canvasY + PLAYER_RADIUS + 8,
-// //   //   PLAYER_RADIUS * 2,
-// //   //   2,
-// //   // );
-// //   // context.fillStyle = 'grey';
-// //   // context.fillRect(
-// //   //   canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * astroid.hp / PLAYER_MAX_HP,
-// //   //   canvasY + PLAYER_RADIUS + 8,
-// //   //   PLAYER_RADIUS * 2 * (1 - astroid.hp / PLAYER_MAX_HP),
-// //   //   2,
-// //   // );
-// // }
-
-// function renderAstroid(me, astroid) {
-//   // const { x, y } = astroid;
-//   // context.drawImage(
-//   //   getAsset('greyastroid.svg'),
-//   //   canvas.width / 2 + x - me.x - PLAYER_RADIUS,
-//   //   canvas.height / 2 + y - me.y - PLAYER_RADIUS,
-//   //   PLAYER_RADIUS * 2,
-//   //   PLAYER_RADIUS * 2,
-//   // );
-//   const { x, y, direction, type } = astroid;
-//   const canvasX = canvas.width / 2 + x - me.x;
-//   const canvasY = canvas.height / 2 + y - me.y;
-
-//   // Draw ship
-//   context.save();
-//   context.translate(canvasX, canvasY);
-//   context.rotate(direction);
-
-//   const displaySize = Math.trunc(Math.log(astroid.hp+3)*12);
-
-//     var astroidAsset = null;
-//     const typeChar = type.charAt(0);
-//     if(typeChar == 'R'){
-//         astroidAsset = getAsset('astroid.svg');
-//     }else if(typeChar == 'M'){
-//         astroidAsset = getAsset('greyastroid.svg');
-//     }else if(typeChar == 'N'){
-//         astroidAsset = getAsset('tealGreenAstroid.svg');
-//     }else{
-//         astroidAsset = getAsset('astroid.svg');
-//     }
-//   context.drawImage(
-//     // getAsset('greyastroid.svg'),
-//     astroidAsset,
-//     -displaySize,//TODO: Get to work with .size
-//     -displaySize,
-//     displaySize * 2,
-//     displaySize * 2,
-//   );
-//   context.restore();
-
-//   // Draw health bar
-//   context.fillStyle = '#15f2fd ';
-//   context.fillRect(
-//     canvasX - PLAYER_RADIUS,
-//     canvasY + PLAYER_RADIUS + 8,
-//     PLAYER_RADIUS * 2,
-//     2,
-//   );
-//   context.fillStyle = 'grey';
-//   context.fillRect(
-//     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * astroid.hp / PLAYER_MAX_HP,
-//     canvasY + PLAYER_RADIUS + 8,
-//     PLAYER_RADIUS * 2 * (1 - astroid.hp / PLAYER_MAX_HP),
-//     2,
-//   );
-// }
-
-// function renderMainMenu() {
-//   const t = Date.now() / 7500;
-//   const x = MAP_SIZE / 2 + 800 * Math.cos(t);
-//   const y = MAP_SIZE / 2 + 800 * Math.sin(t);
-//   renderBackground(x, y);
-
-//   // Rerun this render function on the next frame
-//   animationFrameRequestId = requestAnimationFrame(renderMainMenu);
-// }
-
-// animationFrameRequestId = requestAnimationFrame(renderMainMenu);
-
-// // Replaces main menu rendering with game rendering.
-// export function startRendering() {
-//   cancelAnimationFrame(animationFrameRequestId);
-//   animationFrameRequestId = requestAnimationFrame(render);
-// }
-
-// // Replaces game rendering with main menu rendering.
-// export function stopRendering() {
-//   cancelAnimationFrame(animationFrameRequestId);
-//   animationFrameRequestId = requestAnimationFrame(renderMainMenu);
-// }
-
-
-
-
-
-
-
-
-
-//@@@
-
-
-
-
-
-
-
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering
 import { debounce } from 'throttle-debounce';
@@ -368,7 +26,7 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions));
 let animationFrameRequestId;
 
 function render() {
-  const { me, others, bullets, astroids} = getCurrentState();
+  const { me, others, bullets, astroids, ais} = getCurrentState();
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
@@ -383,7 +41,8 @@ function render() {
     // Draw all players
     renderPlayer(me, me);
     others.forEach(renderPlayer.bind(null, me));
-
+    // Draw all ai's
+    ais.forEach(renderAI.bind(null, me));
     // Draw all astroids
     astroids.forEach(renderAstroid.bind(null, me));
   }
@@ -557,6 +216,18 @@ function renderBullet(me, bullet) {
   );
 }
 
+function renderAI(me, ai) {
+  const { x, y } = ai;
+  context.drawImage(
+    // getAsset('bullet.svg'),
+    getAsset('bulletLime1.svg'),
+    canvas.width / 2 + x - me.x - BULLET_RADIUS,
+    canvas.height / 2 + y - me.y - BULLET_RADIUS,
+    BULLET_RADIUS * 2,
+    BULLET_RADIUS * 2,
+  );
+}
+
 function renderAstroid(me, astroid) {
   // const { x, y } = astroid;
   // context.drawImage(
@@ -576,6 +247,7 @@ function renderAstroid(me, astroid) {
   context.rotate(direction);
 
   const displaySize = Math.trunc(Math.log(astroid.hp+3)*12);
+  // const displaySize = Math.trunc(Math.log(astroid.hp+3)*12+0.001*astroid.hp+Math.pow());
 
     var astroidAsset = null;
     const typeChar = type.charAt(0);

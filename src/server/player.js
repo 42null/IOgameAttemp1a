@@ -110,19 +110,19 @@ class Player extends ObjectClass {
         // console.log("thrustEnergy = "+thrustEnergy);
         
         switch(direction_){
-            case 1:
+            case 1://North
                 direction_ = this.thrusters.north.angle;
                 this.thrusters.north.active = 100;
                 break;
-            case 2:
+            case 2://East
                 direction_ = this.thrusters.east.angle;
                 this.thrusters.east.active = 100;
                 break;
-            case 3:
+            case 3://South
                 direction_ = this.thrusters.south.angle;
-                this.thrusters.south.active = 100;
+                this.thrusters.south.active = 1000;
                 break;
-            case 4:
+            case 4://West
                 direction_ = this.thrusters.west.angle;
                 this.thrusters.west.active = 100;
                 break;

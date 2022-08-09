@@ -1,6 +1,7 @@
 const Constants = require('../shared/constants');
 const Player = require('./player');
 const Astroid = require('./astroid');
+const Ai = require('./ai1');
 const applyBulletCollisions = require('./collisions');
 
 const Generator = require('./generator');
@@ -24,15 +25,17 @@ class Game {
     this.players = {};
     this.bullets = [];
     this.astroids = [];
+    this.ais = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
 
 
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
-    // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));
-    this.astroids = this.astroids.concat(new Astroid("N11111",1000000,0,0,'N'));
+    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));
+    this.astroids = this.astroids.concat(new Astroid("N11111",10000,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2,'N'));
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(10,2)/30),10,1000,-2));
+    this.ais = this.ais.concat(new Ai("A",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2));
   }
 
   addPlayer(socket, username) {
@@ -178,6 +181,9 @@ class Game {
     const nearbyAstroids = this.astroids.filter(
       a => a.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
+    const nearbyAis = this.ais.filter(
+      i => i.distanceTo(player) <= Constants.MAP_SIZE / 2,
+    );
       
     return {
       t: Date.now(),
@@ -185,6 +191,7 @@ class Game {
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),
       astroids: nearbyAstroids.map(a => a.serializeForUpdate()),
+      ais: nearbyAis.map(i => i.serializeForUpdate()),
       leaderboard,
     };
   }
