@@ -85,9 +85,18 @@ class Player extends ObjectClass {
     } 
       
     // Make sure the player stays in bounds
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
-
+    // this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
+    // this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+    if(this.x < 0){
+        this.x += Constants.MAP_SIZE;
+    }else if(this.x > Constants.MAP_SIZE){
+        this.x -= Constants.MAP_SIZE;
+    }
+    if(this.y < 0){
+        this.y += Constants.MAP_SIZE;
+    }else if(this.y > Constants.MAP_SIZE){
+        this.y -= Constants.MAP_SIZE;
+    }
     // Fire a bullet, if needed
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0 ) {

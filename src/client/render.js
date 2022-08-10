@@ -217,14 +217,67 @@ function renderBullet(me, bullet) {
 }
 
 function renderAI(me, ai) {
-  const { x, y } = ai;
-  context.drawImage(
-    // getAsset('bullet.svg'),
-    getAsset('bulletLime1.svg'),
-    canvas.width / 2 + x - me.x - BULLET_RADIUS,
-    canvas.height / 2 + y - me.y - BULLET_RADIUS,
-    BULLET_RADIUS * 2,
-    BULLET_RADIUS * 2,
+    const { x, y, direction, /*thrusters*/northActive, eastActive, southActive, westActive } = ai;
+    const canvasX = canvas.width / 2 + x - me.x;
+    const canvasY = canvas.height / 2 + y - me.y;
+// Draw ship
+    context.save();
+    context.translate(canvasX, canvasY);
+    context.rotate(direction);
+    const use_size_radius = 20;
+    context.drawImage(
+    getAsset('ship.svg'),
+        -use_size_radius,
+        -use_size_radius,
+        use_size_radius * 2,
+        use_size_radius * 2,
+    );
+    const active = true;
+    if(active){
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_size_radius,
+            -use_size_radius,
+            use_size_radius * 2,
+            use_size_radius * 2,
+        );
+    }
+
+  context.restore();
+
+  // Draw health bar
+    context.fillStyle = '#3ec452';
+    context.fillRect(
+        canvasX - PLAYER_RADIUS - 1,
+        canvasY + PLAYER_RADIUS + 7,
+        PLAYER_RADIUS * 2+2,
+        4,
+    );
+    
+  context.fillStyle = 'white';
+    context.fillRect(
+        canvasX - PLAYER_RADIUS,
+        canvasY + PLAYER_RADIUS + 8,
+        PLAYER_RADIUS * 2,
+        2,
+    );
+    context.fillStyle = '#3ec452';    
+  context.fillRect(
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * ai.hp / PLAYER_MAX_HP,
+    canvasY + PLAYER_RADIUS + 7,
+    PLAYER_RADIUS * 2 * (1 - ai.hp / PLAYER_MAX_HP)+1,
+    4,
+  );
+  if(ai.hp < PLAYER_MAX_HP){
+    context.fillStyle = 'red';
+  }else{
+    context.fillStyle = 'orange';
+  }
+  context.fillRect(
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * ai.hp / PLAYER_MAX_HP - 1,
+    canvasY + PLAYER_RADIUS + 8,
+    PLAYER_RADIUS * 2 * (1 - ai.hp / PLAYER_MAX_HP)+1,
+    2,
   );
 }
 

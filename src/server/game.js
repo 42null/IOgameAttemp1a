@@ -36,6 +36,8 @@ class Game {
     this.astroids = this.astroids.concat(new Astroid("N11111",10000,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2,'N'));
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(10,2)/30),10,1000,-2));
     this.ais = this.ais.concat(new Ai("A",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2));
+    this.ais = this.ais.concat(new Ai("A1",50,Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2));
+    this.ais = this.ais.concat(new Ai("A2",50,Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2+50));
   }
 
   addPlayer(socket, username) {
@@ -44,7 +46,8 @@ class Game {
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
-    this.players[socket.id] = new Player(socket.id, username, x, y);
+    // this.players[socket.id] = new Player(socket.id, username, x, y);//TODO: Figure out how this works
+    this.players[socket.id] = new Player(socket.id, username, Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2);
   }
 
   removePlayer(socket) {
@@ -109,7 +112,10 @@ class Game {
     this.astroids.forEach(astroid => {
       astroid.update();
     });
-      
+
+    this.ais.forEach(ai => {
+        ai.update();
+    });
       
     // Apply collisions, give players score for hitting bullets
     const {destroyedBullets, destroyedAstroids} = applyBulletCollisions(Object.values(this.players),Object.values(this.astroids), this.bullets);
