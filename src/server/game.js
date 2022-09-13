@@ -32,12 +32,23 @@ class Game {
 
 
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,100,1));
-    this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));
-    this.astroids = this.astroids.concat(new Astroid("N11111",10000,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2,'N'));
+    // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(Constants.MAP_SIZE/100,2)/30),10,1000,-2));//~~~~~~~~~~~~
+    // this.astroids = this.astroids.concat(new Astroid("N11111",10000,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2,'N'));
+    this.markerAstroid = new Astroid("N1111",1,Constants.MAP_SIZE/2+500,Constants.MAP_SIZE/2+500,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+500,'N');
+    this.markerAstroid = new Astroid("N1112",1,Constants.MAP_SIZE/2-500,Constants.MAP_SIZE/2-500,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2-500,'N');
+      this.markerAstroid.speed = 0;
+    this.astroids = this.astroids.concat(this.markerAstroid);
     // this.astroids = this.astroids.concat(Generator.generateAttackables(Astroid, Math.trunc(Math.pow(10,2)/30),10,1000,-2));
     this.ais = this.ais.concat(new Ai("A",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2));
     this.ais = this.ais.concat(new Ai("A1",50,Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2));
     this.ais = this.ais.concat(new Ai("A2",50,Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A3",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A4",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A5",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A6",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A7",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A8",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
+    this.ais = this.ais.concat(new Ai("A9",50,Constants.MAP_SIZE/2,Constants.MAP_SIZE/2+50));
   }
 
   addPlayer(socket, username) {

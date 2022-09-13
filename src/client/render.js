@@ -108,7 +108,6 @@ function renderBackground(x, y) {
         context.lineTo(canvas.width-10, backgroundY+i*50);
         context.stroke();
     }
-
     
     context.beginPath();
     context.moveTo(backgroundX, 10);
@@ -148,7 +147,7 @@ function renderPlayer(me, player) {
         use_player_radius * 2,
     );
     // if(player.status.movement.up==1){
-    console.log("player.thrusters.north.active = "+northActive);
+    // console.log("player.thrusters.north.active = "+northActive);
     if(northActive > 0){
         context.drawImage(
             getAsset('plumes/exaust_gif_1.gif'),

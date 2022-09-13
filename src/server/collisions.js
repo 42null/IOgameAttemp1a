@@ -4,8 +4,8 @@ const Constants = require('../shared/constants');
 function applyBulletCollisions(players, astroids, bullets) {//TODO: Good off of not bullets
   const destroyedBullets = [];
   const destroyedAstroids = [];
-  for (let i = 0; i < bullets.length; i++) {//TODO: Make it stop if all bullets are destroyed on players
-    // Look for a player (who didn't create the bullet) to collide each bullet with.
+  for (let i = 0; i < bullets.length; i++ ){//TODO: Make it stop if all bullets are destroyed on players
+    // Look for a player (who didn't create thFe bullet) to collide each bullet with.
     // As soon as we find one, break out of the loop to prevent double counting a bullet.
 
   // For astroids

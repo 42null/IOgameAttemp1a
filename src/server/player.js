@@ -75,7 +75,11 @@ class Player extends ObjectClass {
 
         recaculateSpeed();
     }
-
+    // console.log("x = ");
+    // console.log("Ω ~> "+Math.abs(Math.atan((this.y/2-Constants.MAP_SIZE/2),(this.x/2-Constants.MAP_SIZE/2))));
+    // console.log("Ω ~> "+Math.abs(Math.atan((this.y-Constants.MAP_SIZE/2),(this.x-Constants.MAP_SIZE/2))));
+    // console.log("Ω ~> "+Math.atan((this.y-Constants.MAP_SIZE),(this.x-Constants.MAP_SIZE))*57.29578);
+      
     //UPDATE THRUST DISLAY
       //TODO: Make else if?
     for (let x in this.thrusters) {
@@ -189,7 +193,7 @@ class Player extends ObjectClass {
                 this.updatedRock = false;
             }
         }else if(upgradeSlot==52){/*4*/
-            this.direction = 0;
+            // this.direction = 0;
             this.speed = 0;
         }else if(upgradeSlot==53){/*5*/
             this.addVelocityVector(-90,10);
