@@ -87,6 +87,7 @@ function renderBackground(x, y) {
     MAP_SIZE / 2,
   );
 
+    //RENDER MAP
     context.strokeStyle = "#FF0000";
     context.strokeRect(20, 20, 150, 100);
     
@@ -217,12 +218,14 @@ function renderBullet(me, bullet) {
 
 function renderAI(me, ai) {
     const { x, y, direction, /*thrusters*/northActive, eastActive, southActive, westActive } = ai;
+    
     const canvasX = canvas.width / 2 + x - me.x;
     const canvasY = canvas.height / 2 + y - me.y;
+    // context.rotate(0);
 // Draw ship
     context.save();
     context.translate(canvasX, canvasY);
-    context.rotate(direction);
+    context.rotate(3.1415922-direction);
     const use_size_radius = 20;
     context.drawImage(
     getAsset('ship.svg'),
@@ -268,10 +271,11 @@ function renderAI(me, ai) {
     4,
   );
   if(ai.hp < PLAYER_MAX_HP){
-    context.fillStyle = 'red';
+    context.fillStyle = 'green';
   }else{
     context.fillStyle = 'orange';
   }
+
   context.fillRect(
     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * ai.hp / PLAYER_MAX_HP - 1,
     canvasY + PLAYER_RADIUS + 8,

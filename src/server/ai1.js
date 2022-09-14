@@ -20,7 +20,7 @@ class AI1 extends ObjectClass {
 
     this.type = id.charAt(0);
     this.hp = size;
-    this.direction = Math.round(Math.random() * 6.283185 * 100);
+    this.direction = 0;// Math.round(Math.random() * 6.283185 * 100);
     // this.speed = Math.trunc(Math.random() * 50)/50;
     this.speed = Math.trunc(Math.random() * 500)/50;
     // this.speed = 0;;
@@ -62,26 +62,25 @@ class AI1 extends ObjectClass {
     // var angleOfUpper = Math.atan((this.currentTargetY-this.y)/(this.currentTargetY-this.x));
     //   this.direction += angleOfUpper/50;
 
-    this.speed = 0;
+    this.speed = this.speed*.05;
 
     var diffX = this.currentTargetX-this.x;
     var diffY = this.currentTargetY-this.y;
       
     if(Math.sign(diffX)==1){
-        super.addVelocityVectorRad(1.570796, Math.abs(diffX)/.1);
+        super.addVelocityVectorRad(1.570796, Math.abs(diffX)/0.05);
     }else{
-        super.addVelocityVectorRad(4.712389, Math.abs(diffX)/.1);
+        super.addVelocityVectorRad(4.712389, Math.abs(diffX)/0.05);
     }
     if(Math.sign(diffY)==1){
-        super.addVelocityVectorRad(0, Math.abs(diffY)/.1);
+        super.addVelocityVectorRad(0, Math.abs(diffY)/0.05);
     }else{
-        super.addVelocityVectorRad(3.14159, Math.abs(diffY)/.1);
+        super.addVelocityVectorRad(3.14159, Math.abs(diffY)/0.05);
     }
-      // this.speed = ;
+    
     this.x += this.speed * Math.sin(this.direction);
     this.y += this.speed * Math.cos(this.direction);
-      
-
+  
       
   // if(this.x < 0 || this.x > Constants.MAP_SIZE){
   //       this.direction = 6.283185-this.direction;
@@ -95,6 +94,10 @@ class AI1 extends ObjectClass {
         this.y = Math.random() * Constants.MAP_SIZE;
     }
 
+    this.speed = Math.min(this.speed, 5);
+    this.speed = Math.max(this.speed, -5);
+
+      
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
       
