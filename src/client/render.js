@@ -89,7 +89,13 @@ function renderBackground(x, y) {
 
     //RENDER MAP
     context.strokeStyle = "#FF0000";
-    context.strokeRect(20, 20, 150, 100);
+    context.strokeRect(20, 20, 150, 150);
+    context.beginPath();
+    // context.moveTo((x/MAP_SIZE)*130+20, 20);
+    // context.lineTo((x/MAP_SIZE)*130+20,(y/MAP_SIZE)*130+20);
+    context.beginPath();
+    context.arc((x/MAP_SIZE)*130+20, (y/MAP_SIZE)*130+20, 5, 0, 2 * Math.PI);
+    context.stroke();
     
     context.beginPath();
     context.moveTo(canvas.width/2, canvas.height/2);

@@ -62,7 +62,7 @@ class AI1 extends ObjectClass {
     // var angleOfUpper = Math.atan((this.currentTargetY-this.y)/(this.currentTargetY-this.x));
     //   this.direction += angleOfUpper/50;
 
-    this.speed = this.speed*.05;
+    this.speed = this.speed*.95;
 
     var diffX = this.currentTargetX-this.x;
     var diffY = this.currentTargetY-this.y;
@@ -90,8 +90,9 @@ class AI1 extends ObjectClass {
   //   }
 
     if(Math.abs(diffX) < 70 && Math.abs(diffY)){
-        this.x = Math.random() * Constants.MAP_SIZE;
-        this.y = Math.random() * Constants.MAP_SIZE;
+        // this.x = Math.random() * Constants.MAP_SIZE;
+        // this.y = Math.random() * Constants.MAP_SIZE;
+        this.speed += 50;
     }
 
     this.speed = Math.min(this.speed, 5);
