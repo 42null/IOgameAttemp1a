@@ -58,6 +58,13 @@ class Player extends ObjectClass {
     };
   }
 
+    getX(){
+        return this.x;
+    }
+    getY(){
+        return this.y;
+    }
+    
   // Returns a newly created bullet, or null.
   update(dt) {
     super.update(dt);

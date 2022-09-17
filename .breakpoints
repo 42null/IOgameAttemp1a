@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "src/client/render.js": [
+      {
+        "id": "70c92092-198d-41e5-9839-5d5e25228428",
+        "line": 12,
+        "version": 4893,
+        "index": 400
+      }
+    ]
+  }
 }

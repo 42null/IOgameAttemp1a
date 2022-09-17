@@ -1,5 +1,6 @@
 const ObjectClass = require('./object');
 const Constants = require('../shared/constants');
+const Player = require('./player');
 
 class AI1 extends ObjectClass {
     hp = -1;
@@ -14,7 +15,7 @@ class AI1 extends ObjectClass {
     currentTargetY = Constants.MAP_SIZE/2-500;
 // BIAS
     
-  constructor(id, size, x, y) {
+  constructor(id, size, x, y, target) {
     super("I"+id, x, y, Math.random() * 2 * Math.PI, 70, size*10000);//Size as mass
     this.mass = size*100;
 
@@ -24,8 +25,7 @@ class AI1 extends ObjectClass {
     // this.speed = Math.trunc(Math.random() * 50)/50;
     this.speed = Math.trunc(Math.random() * 500)/50;
     // this.speed = 0;;
-
-
+    this.target = target;
 
   }
 
@@ -64,8 +64,20 @@ class AI1 extends ObjectClass {
 
     this.speed = this.speed*.95;
 
-    var diffX = this.currentTargetX-this.x;
-    var diffY = this.currentTargetY-this.y;
+    var diffX;
+    var diffY;
+  // (a instanceof MyType)
+    // if(this.target === null){
+    //     diffX = this.currentTargetX-this.x;
+    //     diffY = this.currentTargetY-this.y;
+    // }else 
+    if(this.target instanceof Player){
+        diffX = this.target.getX()-this.x;
+        diffY = this.target.getY()-this.y;
+        diffX = this.target.x/*getX()*/-this.x;
+        diffY = this.target.y/*getY()*/-this.y;
+    }
+    
       
     if(Math.sign(diffX)==1){
         super.addVelocityVectorRad(1.570796, Math.abs(diffX)/0.05);

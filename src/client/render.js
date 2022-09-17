@@ -45,10 +45,46 @@ function render() {
     ais.forEach(renderAI.bind(null, me));
     // Draw all astroids
     astroids.forEach(renderAstroid.bind(null, me));
+
+    renderGUI(me.x, me.y);
   }
 
   // Rerun this render function on the next frame
   animationFrameRequestId = requestAnimationFrame(render);
+}
+
+function renderGUI(x, y){
+//RENDER MAP
+    //Render map box & player
+    var radiusToUse = 2;//player.hp/PLAYER_MAX_HP*2;
+
+    context.strokeStyle = "#FFFFFF";
+    context.beginPath();
+    context.strokeRect(20, 20, 130, 130);
+    
+    context.arc((x/MAP_SIZE)*130+20, (y/MAP_SIZE)*130+20, radiusToUse, 0, 2 * Math.PI);
+    context.strokeStyle = "#FF0000";
+    context.strokeRect(20, 20, 130, 130);
+    context.arc((x/MAP_SIZE)*130+20, (y/MAP_SIZE)*130+20, radiusToUse, 0, 2 * Math.PI);
+    context.stroke();
+
+    
+    context.strokeStyle = "#990000";
+    context.beginPath();
+    context.moveTo(130/2+20, 20);
+    context.lineTo(130/2+20, 150);
+    context.moveTo(20, 130/2+20, 20);
+    context.lineTo(150, 130/2+20, 150);
+    context.stroke();
+
+
+//Player on top of everything //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    context.fillStyle = "#FFFF00";
+    context.beginPath();
+    context.moveTo(x,y);
+    context.arc(x,y,radiusToUse,0,2*Math.PI);
+    context.closePath();
+    context.fill();
 }
 
 function renderBackground(x, y) {
@@ -87,15 +123,6 @@ function renderBackground(x, y) {
     MAP_SIZE / 2,
   );
 
-    //RENDER MAP
-    context.strokeStyle = "#FF0000";
-    context.strokeRect(20, 20, 150, 150);
-    context.beginPath();
-    // context.moveTo((x/MAP_SIZE)*130+20, 20);
-    // context.lineTo((x/MAP_SIZE)*130+20,(y/MAP_SIZE)*130+20);
-    context.beginPath();
-    context.arc((x/MAP_SIZE)*130+20, (y/MAP_SIZE)*130+20, 5, 0, 2 * Math.PI);
-    context.stroke();
     
     context.beginPath();
     context.moveTo(canvas.width/2, canvas.height/2);
@@ -208,6 +235,19 @@ function renderPlayer(me, player) {
   //   PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
   //   2,
   // );
+
+
+
+
+    //Map rendering
+    context.strokeStyle = "#FFFFFF";
+    context.beginPath();
+    const radiusToUse = player.hp/PLAYER_MAX_HP*5;
+    context.arc((player.x/MAP_SIZE)*130+20, player.y/MAP_SIZE*130+20, radiusToUse, 0, 2 * Math.PI);
+    context.strokeStyle = "#660000";
+    context.arc((x/MAP_SIZE)*130+20, y/MAP_SIZE*130+20, radiusToUse, 0, 2 * Math.PI);
+    context.stroke();
+
 }
 
 function renderBullet(me, bullet) {

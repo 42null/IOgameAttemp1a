@@ -56,7 +56,13 @@ class Game {
     const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     // this.players[socket.id] = new Player(socket.id, username, x, y);//TODO: Figure out how this works
-    this.players[socket.id] = new Player(socket.id, username, Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2);
+
+
+    this.players[socket.id] = new Player(socket.id, username, Constants.MAP_SIZE/2+50,Constants.MAP_SIZE/2,);
+
+      
+    var followerAI = new Ai("A"+socket.id,50,Math.random()*Constants.MAP_SIZE,Math.random()*Constants.MAP_SIZE,this.players[socket.id])
+    this.ais = this.ais.concat(followerAI);
   }
 
   removePlayer(socket) {
