@@ -182,16 +182,47 @@ function renderPlayer(me, player) {
     );
     // if(player.status.movement.up==1){
     // console.log("player.thrusters.north.active = "+northActive);
-    if(northActive > 0){
+
+//THRUSTER PLUME RENDERING
+    if(northActive > 0){//NORTH
         context.drawImage(
             getAsset('plumes/exaust_gif_1.gif'),
             -use_player_radius,
-            -use_player_radius,
+            use_player_radius*.1,
             use_player_radius * 2,
             use_player_radius * 2,
         );
     }
-
+    context.rotate(1.570796);
+    if(eastActive > 0){//EAST
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_player_radius,
+            +use_player_radius*.3,
+            use_player_radius * 2,
+            use_player_radius * 2,
+        );
+    }
+    context.rotate(1.570796);
+    if(southActive > 0){//SOUTH
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_player_radius,
+            use_player_radius * .7,
+            use_player_radius * 2,
+            use_player_radius * 2,
+        );
+    }
+    context.rotate(1.570796);
+    if(westActive > 0){//WEST
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_player_radius,
+            +use_player_radius*.3,
+            use_player_radius * 2,
+            use_player_radius * 2,
+        );
+    }
   context.restore();
 
   // Draw health bar
@@ -328,6 +359,12 @@ function renderAI(me, ai) {
     PLAYER_RADIUS * 2 * (1 - ai.hp / PLAYER_MAX_HP)+1,
     2,
   );
+
+//Place on Map
+    context.strokeStyle = "blue";//"#6fd6f1";//Jousveny
+    context.beginPath();
+    context.arc((x/MAP_SIZE)*130+20, y/MAP_SIZE*130+20, 2, 0, 2 * Math.PI);
+    context.stroke();
 }
 
 function renderAstroid(me, astroid) {
