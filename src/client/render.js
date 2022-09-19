@@ -105,23 +105,24 @@ function renderBackground(x, y) {
     MAP_SIZE / 10,
     backgroundX,
     backgroundY,
-    MAP_SIZE / 2,
+    MAP_SIZE / 3,
   );
   backgroundGradient.addColorStop(0, '#55cf9c');
-  backgroundGradient.addColorStop(1, 'gray');
+  // backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(1, '#000');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
 
-      const backgroundGradient2 = context.createRadialGradient
-      (
-    backgroundX,
-    backgroundY,
-    MAP_SIZE / 10,
-    backgroundX,
-    backgroundY,
-    MAP_SIZE / 2,
-  );
+  // const backgroundGradient2 = context.createRadialGradient
+  //     (
+  //   backgroundX,
+  //   backgroundY,
+  //   MAP_SIZE / 10,
+  //   backgroundX,
+  //   backgroundY,
+  //   MAP_SIZE / 2,
+  // );
 
     
     context.beginPath();
@@ -130,6 +131,8 @@ function renderBackground(x, y) {
     context.strokeStyle = "pink";
     context.stroke();
 
+    // console.globalCompositeOperation = "difference";
+    // ctx.fillStyle = "white";
     context.strokeStyle = "#7c136030";
     for(var i=-100;i<100;i++){
         context.beginPath();
@@ -294,7 +297,7 @@ function renderBullet(me, bullet) {
 }
 
 function renderAI(me, ai) {
-    const { x, y, direction, /*thrusters*/northActive, eastActive, southActive, westActive } = ai;
+    const { x, y, direction, /*thrusters*/ northActive, eastActive, southActive, westActive } = ai;
     
     const canvasX = canvas.width / 2 + x - me.x;
     const canvasY = canvas.height / 2 + y - me.y;
@@ -303,7 +306,7 @@ function renderAI(me, ai) {
     context.save();
     context.translate(canvasX, canvasY);
     context.rotate(3.1415922-direction);
-    const use_size_radius = 20;
+    const use_size_radius = 10;
     context.drawImage(
     getAsset('ship.svg'),
         -use_size_radius,
@@ -312,16 +315,46 @@ function renderAI(me, ai) {
         use_size_radius * 2,
     );
     const active = true;
-    if(active){
+//THRUSTER PLUME RENDERING
+    if(northActive > 0){//NORTH
         context.drawImage(
             getAsset('plumes/exaust_gif_1.gif'),
             -use_size_radius,
-            -use_size_radius,
+            use_size_radius*.1,
             use_size_radius * 2,
             use_size_radius * 2,
         );
     }
-
+    context.rotate(1.570796);
+    if(eastActive > 0){//EAST
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_size_radius,
+            +use_size_radius*.3,
+            use_size_radius * 2,
+            use_size_radius * 2,
+        );
+    }
+    context.rotate(1.570796);
+    if(southActive > 0){//SOUTH
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_size_radius,
+            use_size_radius * .7,
+            use_size_radius * 2,
+            use_size_radius * 2,
+        );
+    }
+    context.rotate(1.570796);
+    if(westActive > 0){//WEST
+        context.drawImage(
+            getAsset('plumes/exaust_gif_1.gif'),
+            -use_size_radius,
+            +use_size_radius*.3,
+            use_size_radius * 2,
+            use_size_radius * 2,
+        );
+    }
   context.restore();
 
   // Draw health bar

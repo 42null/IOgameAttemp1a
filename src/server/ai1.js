@@ -133,7 +133,11 @@ class AI1 extends ObjectClass {
       direction: this.direction,
       hp: this.hp,
       // type: this.type,
-        speed: this.speed
+        speed: this.speed,
+        northActive: true,
+        eastActive: false,
+        southActive: false,
+        westActive: false,
     };
   }
 }

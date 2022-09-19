@@ -1,16 +1,13 @@
-                              <h1 align="center">
-    <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/master/public/assets/icon.svg" width="140"> <br />
-    An Example .io Game
+<h1 align="center">
+    IOgameAttemp1a <small><i>(Pending better name)</i></small>
+    <br>
+    <br>
+    <img alt="An Example .io Game" title="IOgameAttemp1a" src="./Screenshot.png" width="140"> <br />
+    An Example .io Game Fork
 </h1>
 <h4 align="center">
-  <a href="https://example-io-game.victorzhou.com">https://example-io-game.victorzhou.com</a>
+  A fork from <a href="https://example-io-game.victorzhou.com" target="_blank">https://example-io-game.victorzhou.com</a>
 </h4>
-
-<p align="center">
-  <a href="https://travis-ci.com/vzhou842/example-.io-game">
-    <img src="https://travis-ci.com/vzhou842/example-.io-game.svg?branch=master" alt="Build Status"></img>
-  </a>
-</p>
 
 An example multiplayer (.io) web game. Read the walkthrough: [**How to Build a Multiplayer (.io) Web Game**](https://victorzhou.com/blog/build-an-io-game-part-1/).
 
